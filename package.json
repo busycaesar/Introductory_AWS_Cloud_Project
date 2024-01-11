@@ -11,5 +11,8 @@
     "url": "git+httmls://github.com/busycaesar/fragments.git"
   },
   "author": "Dev Jigishkumar Shah",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "prettier": "3.1.1"
+  }
 }
