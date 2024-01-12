@@ -3,6 +3,7 @@ const options = { level: process.env.LOG_LEVEL || 'info' };
 
 // In case if there is debug logging, adding some properties to make the logs easier to read!
 if (options.level === 'debug') {
+  console.log('Environment Variables:', process.env);
   options.transport = {
     target: 'pino-pretty',
     options: { colorize: true },
