@@ -10,8 +10,6 @@ const compression = require('compression');
 const logger = require('./logger');
 const pino = require('pino-http')({ logger });
 
-const { author, version } = require('../package.json');
-
 const passport = require('passport');
 const authenticate = require('./auth');
 
