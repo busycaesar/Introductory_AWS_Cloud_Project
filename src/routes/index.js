@@ -5,11 +5,15 @@ const express = require('express');
 // Information about version and author from package.json!
 const { version, author } = require('../../package.json');
 
+// Authentication middleware!
+const { authenticate } = require('../auth');
+
 // Creating a router to mount APIs!
 const router = express.Router();
 
 // Exposing all API routes on /v1/* to include an API version!
-router.use('/v1', require('./api'));
+// Protecting all of router on /v1/* to use authenticate middleware!
+router.use('/v1', authenticate(), require('./api'));
 
 // A simple health check router to check if the server is still working!
 router.get('/', (req, res) => {
