@@ -23,11 +23,14 @@
     "prettier": "3.1.1"
   },
   "dependencies": {
+    "aws-jwt-verify": "^4.0.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "helmet": "^7.1.0",
+    "passport": "^0.7.0",
+    "passport-http-bearer": "^1.0.1",
     "pino": "^8.17.2",
     "pino-http": "^9.0.0",
     "pino-pretty": "^10.3.1",
