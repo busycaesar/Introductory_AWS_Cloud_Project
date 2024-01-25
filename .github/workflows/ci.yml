@@ -1,0 +1,59 @@
+# .github/workflows/ci.yml
+
+# Continuous Integration Workflow
+name: ci
+
+# This work flow is expected to run whenever we push commits to the Master branch or whenever there is a PR to the Master branch.
+# https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#on
+
+on:
+  
+  pull_request:
+    branches:
+      - Master
+
+  push:
+    branches:
+      - Master
+
+# Defining a job which runs when the above condition is fullfilled.
+jobs:
+
+  # Defining the job named lint to be runned.
+  lint:
+
+    # This is the human readable name given to the job shows up on the GitHub Actions web UI!
+    name: ESLint
+
+    # Specifing the machine on which this job is expected to run.
+    # Running this on Linux VM, since the app will be deployed on Linux too!
+    runs-on: ubuntu-latest
+
+    # These are the following steps which are performed one after the others. If any of the steps fail, the process stops.
+    steps:
+
+      # https://github.com/actions/checkout
+      # This step clones the repository into the VM and makes sure that the VM has the latest version of the source code
+      # This step uses the predefined GitHub Action.
+      - name: Check out code
+        uses: actions/setup-node@v3
+     
+      # This step sets up the node js environment with a specific version of the node and other specifications.
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+
+          node-version: "18"
+          # Cacheing the npm dependencies so it doesnt need to be downloaded next time!
+          cache: "npm"
+
+      # This step installs all the node.js dependencies mentioned in the package.json file.
+      # It uses npm ci vs npm install. NPM ci installs all the exact depencencies mentioned in the package-lock.json file.
+      # This is to make sure that the tests are performed with the exact same dependencies and sub-dependencies used while development.
+      - name: Install node dependencies
+        # Use `ci` vs. `install`, see https://docs.npmjs.com/cli/v8/commands/npm-ci
+        run: npm ci
+
+      # This step runnes the ESLint. It assumes that there would be a script in the package.json named Lint.
+      - node: Run ESLint
+        run: npm run lint
