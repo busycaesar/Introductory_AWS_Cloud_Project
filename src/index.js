@@ -6,9 +6,6 @@ require('dotenv').config();
 // Helps to log any crash/information required/vital while debugging!
 const logger = require('./logger');
 
-// This is purposely added to get the error message from GitHub actions!
-const unneededVariable = 'This varibles is never used!';
-
 // If the app crashes due to an uncaught exception, it will be logged first!
 process.on('uncaughtException', (err, origin) => {
   logger.fatal({ err, origin }, 'uncaughtException');
