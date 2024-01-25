@@ -37,6 +37,8 @@ jobs:
       # This step uses the predefined GitHub Action.
       - name: Check out code
         uses: actions/setup-node@v3
+        with:
+          path: .
      
       # This step sets up the node js environment with a specific version of the node and other specifications.
       - name: Setup node
