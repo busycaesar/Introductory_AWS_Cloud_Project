@@ -36,7 +36,7 @@ jobs:
       # This step clones the repository into the VM and makes sure that the VM has the latest version of the source code
       # This step uses the predefined GitHub Action.
       - name: Check out code
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v3
      
       # This step sets up the node js environment with a specific version of the node and other specifications.
       - name: Setup node
@@ -46,7 +46,6 @@ jobs:
           node-version: "18"
           # Cacheing the npm dependencies so it doesnt need to be downloaded next time!
           cache: "npm"
-          cache-dependency-path: "./package-lock.json"
 
       # This step installs all the node.js dependencies mentioned in the package.json file.
       # It uses npm ci vs npm install. NPM ci installs all the exact depencencies mentioned in the package-lock.json file.
