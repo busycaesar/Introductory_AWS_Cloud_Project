@@ -55,5 +55,5 @@ jobs:
         run: npm ci
 
       # This step runnes the ESLint. It assumes that there would be a script in the package.json named Lint.
-      - node: Run ESLint
+      - name: Run ESLint
         run: npm run lint
