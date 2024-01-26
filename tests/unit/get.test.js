@@ -7,7 +7,7 @@ const app = require('../../src/app');
 describe('GET /v1/fragments', () => {
   
   // Making sure for all the unauthorized requests, the status code of 401 is sent!
-  test('unauthenticated requests are denied', () => request(app).get('/v1/fragments').expect(500));
+  test('unauthenticated requests are denied', () => request(app).get('/v1/fragments').expect(401));
 
   // Checking the credentials for all the authorized requests! 
   test('incorrect credentials are denied', () =>
