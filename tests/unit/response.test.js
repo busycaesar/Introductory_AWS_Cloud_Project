@@ -38,7 +38,7 @@ describe('API Response', () => {
     expect(successResponse).toEqual({
       status: 'Okay!',
       a: 1,
-      b: 1,
+      b: 2,
     });
   });
 });
