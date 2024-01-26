@@ -1,4 +1,4 @@
-// src/auth.js
+// src/auth/cognito.js
 
 // Configuring the strategy for Passport to parse the token from the Authorization header provided by Cognito!
 
@@ -6,11 +6,13 @@ const passport = require('passport');
 const BearerStrategy = require('passport-http-bearer').Strategy;
 const { CognitoJwtVerifier } = require('aws-jwt-verify');
 
-const logger = require('./logger');
+const logger = require('../logger');
 
 // This file expects AWS_COGNITO_POOL_ID and AWS_COGNITO_CLIENT_ID to be already defined!
-if(!(process.env.AWS_COGNITO_POOL_ID && process.env.AWS_COGNITO_CLIENT_ID)){
-	throw new Error("Missing the expected environmental variables: AWS_COGNITO_POOL_ID and AWS_COGNITO_CLIENT_ID");
+if (!(process.env.AWS_COGNITO_POOL_ID && process.env.AWS_COGNITO_CLIENT_ID)) {
+  throw new Error(
+    'Missing the expected environmental variables: AWS_COGNITO_POOL_ID and AWS_COGNITO_CLIENT_ID'
+  );
 }
 
 // Creating a JWT verifier which can confirm that the JWT received from the user is valid.
