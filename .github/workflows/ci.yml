@@ -57,3 +57,25 @@ jobs:
       # This step runnes the ESLint. It assumes that there would be a script in the package.json named Lint.
       - name: Run ESLint
         run: npm run lint
+
+  unit-tests:
+
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install node dependencies and run tests
+        run: |
+
+        - npm ci
+        - npm test
