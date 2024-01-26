@@ -4,7 +4,6 @@ const { createErrorResponse, createSuccessResponse } = require('../../src/respon
 
 // Defining the set of tests!
 describe('API Response', () => {
-  
   // Writing a test for checking createErrorResponse() method!
   test('createErrorResponse()', () => {
     // Storing the response of the function!
@@ -12,7 +11,7 @@ describe('API Response', () => {
 
     // Checking if the response is the same as what is excepted!
     expect(errorResponse).toEqual({
-      status: 'Error',
+      status: 'Error!',
       error: {
         code: 404,
         message: 'Not Found',
@@ -42,5 +41,4 @@ describe('API Response', () => {
       b: 2,
     });
   });
-
 });
