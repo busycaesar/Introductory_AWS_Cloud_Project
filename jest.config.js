@@ -15,5 +15,5 @@ module.exports = {
 	// Verbose: true makes the jest output more detailed information during the test runs!
 	verbose: true,
 	// If a test takes more than 5 seconds, it is considered is already failed!
-	testTimeOut: 5000,
+	testTimeout: 5000,
 };
