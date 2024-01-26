@@ -40,7 +40,7 @@ describe('/ health check', () => {
   test('Should return the correct version, githubUrl and author in the response', async () => {
     const response = await request(app).get('/');
     expect(response.body.author).toEqual(author);
-    expect(response.body.githubYrl.startsWith('http://github.com/')).toBe(true);
+    expect(response.body.githubUrl.startsWith('https://github.com/')).toBe(true);
     expect(response.body.version).toEqual(version);
   });
 });
