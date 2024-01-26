@@ -3,6 +3,7 @@
 module.exports.createSuccessResponse = (data) => {
 	return {
 		status: "Okay!",
+		...data,
 	}
 }
 
