@@ -4,9 +4,9 @@
   "version": "0.0.1",
   "description": "Fragments back-end API",
   "scripts": {
-    "test:watch":"jest -c jest.config.js --runInBand --watch --",
+    "test:watch": "jest -c jest.config.js --runInBand --watch --",
     "test": "jest -c jest.config.js --runInBand --",
-    "converage":"jest -c jest.config.js --runInBand --converage",
+    "converage": "jest -c jest.config.js --runInBand --converage",
     "lint": "eslint --config .eslintrc.js \"./src/**/*.js\" \"tests/**/*.js\"",
     "start": "node src/index.js",
     "dev": "cross-env LOG_LEVEL=debug nodemon ./src/index.js --watch src",
@@ -23,7 +23,8 @@
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
     "nodemon": "^3.0.2",
-    "prettier": "3.1.1"
+    "prettier": "3.1.1",
+    "supertest": "^6.3.4"
   },
   "dependencies": {
     "aws-jwt-verify": "^4.0.0",
