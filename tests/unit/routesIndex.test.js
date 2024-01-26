@@ -15,8 +15,8 @@ describe("Check 404 Error", () => {
 	test("Checking error object", async () => {
 		const response = await request(app).get("/non-existing-path");
 		const resBody = await response.body;
-		expect(resbody.status).toBe("Error!");
-		expect(resbody.error.message).toBe("Not Found!");
+		expect(resBody.status).toBe("Error!");
+		expect(resBody.error.message).toBe("Not Found!");
 		expect(resBody.error.code).toBe(404);
 	});
 
