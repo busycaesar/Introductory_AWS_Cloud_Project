@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Importing all the utility functions helpful in creating the response!
 const { createSuccessResponse, createErrorResponse } = require('../../response');
-const { findFragmentWith, deleteTheFragment } = require('./checkFragments');
+const { findFragmentWith, deleteTheFragment } = require('./fragmentsUtility');
 
 // This API deletes the fragments associated with the received Id!
 router.delete('/:id', (req, res) => {

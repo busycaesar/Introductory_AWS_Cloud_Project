@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Importing all the utility functions helpful in creating the response!
 const { createSuccessResponse, createErrorResponse } = require('../../response');
-const { isSupportedFragmentType, createFragment } = require('./checkFragments');
+const { isSupportedFragmentType, createFragment } = require('./fragmentsUtility');
 
 // This API created a new fragments of the received fragment type!
 router.post('/', (req, res) => {

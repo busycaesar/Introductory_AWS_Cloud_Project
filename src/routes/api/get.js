@@ -13,7 +13,7 @@ const {
   analyzeIdParam,
   getFragmentType,
   getFragmentMetaData,
-} = require('./checkFragments');
+} = require('./fragmentsUtility');
 
 // This API sends all the fragments of the user in an array!
 router.get('/', (req, res) => {
