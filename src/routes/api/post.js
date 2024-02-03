@@ -6,7 +6,11 @@ const router = express.Router();
 
 // Importing all the utility functions helpful in creating the response!
 const { createSuccessResponse, createErrorResponse } = require('../../response');
-const { isSupportedFragmentType, createFragment } = require('./fragmentsUtility');
+const {
+  isSupportedFragmentType,
+  createFragment,
+  getFragmentLocation,
+} = require('./fragmentsUtility');
 
 // This API created a new fragments of the received fragment type!
 router.post('/', (req, res) => {
@@ -22,16 +26,20 @@ router.post('/', (req, res) => {
     return;
   }
 
-  // TODO: Store the meta data and fragments!
-  if (createFragment(fragmentRawData, fragmentType))
-    res.status(201).json(
-      // TODO: Include a location header with full URL to use in order to access newly created fragment!
-      createSuccessResponse({
-        fragment: {
-          // TODO: Include fragment meta data for the newly created fragment!
-        },
-      })
-    );
+  // Getting the metadata of the fragments created!
+  const fragmentMetaData = createFragment(fragmentRawData, fragmentType),
+    // Getting the location of the newly created fragment!
+    fragmentLocation = getFragmentLocation(fragmentMetaData);
+
+  if (fragmentMetaData)
+    res
+      .status(201)
+      .location(fragmentLocation)
+      .json(
+        createSuccessResponse({
+          fragment: fragmentMetaData,
+        })
+      );
 });
 
 // Setting the fragments for the current user!
