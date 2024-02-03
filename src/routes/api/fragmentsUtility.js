@@ -12,7 +12,7 @@ const createFragment = (fragmentRawData, fragmentType) => {
   const fragmentMetaData = generateFragmentMetaData(fragmentType);
   // TODO: Creating the fragment
   // TODO: Storing the fragment and metadata!
-  // TODO: returning type when the fragment is stored!
+  // TODO: returning type when the fragment metadata!
   return fragmentRawData == fragmentMetaData;
 };
 
@@ -21,6 +21,12 @@ const updateFragment = (fragmentId, newFragment) => {
   // Replacing the fragment associated with the passed id with the new fragment
   // Return the fragment metadata
   return fragmentId.metaData == newFragment;
+};
+
+// This functio returns the location of the fragment passed!
+const getFragmentLocation = (fragmentMetaData) => {
+  // TODO: return the location of the fragment!
+  return fragmentMetaData;
 };
 
 // This function returns all the fragments of the user or returns an empty array if the user has no fragments stored!
@@ -95,6 +101,7 @@ module.exports = {
   createFragment,
   updateFragment,
   getAllFragments,
+  getFragmentLocation,
   convertFragment,
   analyzeIdParam,
   getFragmentType,
