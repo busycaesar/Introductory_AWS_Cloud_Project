@@ -7,4 +7,10 @@ const router = express.Router();
 
 router.get('/fragments', require('./get'));
 
+router.post('/fragments', require('./post'));
+
+router.put('/fragments', require('./put'));
+
+router.delete('/fragments', require('./delete'));
+
 module.exports = router;
