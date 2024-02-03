@@ -1,9 +1,10 @@
 // src/routes/api/index.js
 
-const express = require('express');
-
 // Creating a router to mount API endpoints!
+const express = require('express');
 const router = express.Router();
+
+// HTTP request methods for /fragments API!
 
 router.get('/fragments', require('./get'));
 
