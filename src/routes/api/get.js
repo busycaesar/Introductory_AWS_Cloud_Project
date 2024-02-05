@@ -18,8 +18,8 @@ const {
 // This API sends all the fragments of the user in an array!
 router.get('/', (req, res) => {
   // If the requst has a query "expand = 1", the user is send all the fragments along with its meta data. Otherwise, just an array of fragments!
-  const fragments = getAllFragments(req.query.expand);
-  res.status(200).json(createSuccessResponse({ fragments: fragments }));
+  //const fragments = getAllFragments(req.query.expand);
+  res.status(200).json(createSuccessResponse({ fragments: [] }));
 });
 
 // This API get the id and sends the fragment associated with that id!

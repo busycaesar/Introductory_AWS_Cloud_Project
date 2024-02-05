@@ -30,13 +30,15 @@ const getFragmentLocation = (fragmentMetaData) => {
 };
 
 // This function returns all the fragments of the user or returns an empty array if the user has no fragments stored!
-const getAllFragments = (requireMetaData) => {
+const getAllFragments = (requireMetaData = false) => {
   const fragments = [];
   if (requireMetaData) {
+    console.log();
     // TODO: Store all the fragments of the user along with its metadata!
-  } else {
-    // TODO: Store all the fragments of the user without its metadata!
   }
+  // else {
+  //   // TODO: Store all the fragments of the user without its metadata!
+  // }
   return fragments;
 };
 
@@ -60,7 +62,7 @@ const matchFragmentType = (fragment, fragmentType) => {
 };
 
 // This function analyses the id parameter passed through the url and returns the required data from that id!
-const analyzeIdParam = (_id) => {
+const analyzeIdParam = (_id = 'default') => {
   // Checking if the extension is mentioned in the id parameter received!
   const index = _id.lastIndexOf('.');
   // If the extension is mentioned, the function retuns the id and extension from the parameter by separating them!
