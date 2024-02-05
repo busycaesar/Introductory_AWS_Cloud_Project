@@ -1,4 +1,5 @@
-// Fix this path to point to your project's `memory-db.js` source file
+// tests/unit/memory-db.test.js
+
 const MemoryDB = require('../../src/model/data/memory/memory-db');
 
 describe('memory-db', () => {
