@@ -58,4 +58,40 @@ describe('Memory functions to store fragment data and its metadata', () => {
     // Making sure the function returned the undefined!
     expect(_fragment).toBe(undefined);
   });
+
+  test('listFragments should promise to return a list of fragment ids/objects', async () => {
+    const frag1 = {
+        id: '0.0',
+        metadata: 'I am the metadata of the fragment!',
+        ownerId: '1323',
+      },
+      frag2 = {
+        id: '0.1',
+        metadata: 'I should be the metadata of the fragment!',
+        ownerId: '1323',
+      };
+    // Store two fragment metadata!
+    memory.writeFragment(frag1);
+    memory.writeFragmentData('1323', '0.0', frag1);
+    memory.writeFragment(frag2);
+    memory.writeFragmentData('1323', '0.1', frag2);
+    // Call the listfragment function!
+    const fragments1 = await memory.listFragments('1323', true);
+    // Make sure it returns both the fragments in an array!
+    expect(fragments1).toEqual([frag1, frag2]);
+    // Call the listfragment function without expand!
+    const fragments2 = await memory.listFragments('1323', false);
+    // Make sure it returns only the id of both the fragments!
+    expect(fragments2).toEqual([frag1.id, frag2.id]);
+    // Deleting both the fragment meta data!
+    await memory.deleteFragment('1323', '0.0');
+    await memory.deleteFragment('1323', '0.1');
+    // Making sure it returns an empty array when no fragments are present!
+    expect(await memory.listFragments('1323', true)).toEqual([]);
+    // Call the listfragment fuction with wrong owner id!
+    // Make sure it returns empty array!
+    [true, false].map(async (expand) =>
+      expect(await memory.listFragments('not', expand)).toEqual([])
+    );
+  });
 });
