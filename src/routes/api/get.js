@@ -8,7 +8,6 @@ const router = express.Router();
 const { createSuccessResponse, createErrorResponse } = require('../../response');
 const {
   findFragmentWith,
-  getAllFragments,
   convertFragment,
   analyzeIdParam,
   getFragmentType,
