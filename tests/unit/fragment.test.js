@@ -74,9 +74,38 @@ describe('Fragment Class', () => {
   });
 
   test('format testing', () => {
-    const metaData = { id: 'dsa', ownerId: 'aus', type: 'text/html; charset=utf-8' };
-    const _fragment = new Fragment(metaData);
+    // Creating a few meta datas!
+    const metaData = { id: 'dsa', ownerId: 'aus', type: 'text/html; charset=utf-8' },
+      metaData2 = { id: 'dsa2', ownerId: 'aus', type: 'dev' };
+    // Creating a few fragment objects and passing the meta datas created!
+    const _fragment = new Fragment(metaData),
+      _fragment2 = new Fragment(metaData2);
+    // Testing the mimeType function of the fragment object to make sure it returns expected result according to the stored type in the meta data!
     expect(_fragment.mimeType).toBe('text/html');
-    expect(_fragment.isText()).toBe(true);
+    expect(() => _fragment2.mimeType).toThrow();
+    // Testing the isText function of the fragment object to make sure it returns the expected result according to the stored type in the meta data!
+    expect(_fragment.isText).toBe(true);
+    expect(_fragment2.isText).toBe(false);
+    // Making sure the formats function of the framgnet object returns an array type!
+    expect(Array.isArray(_fragment.formats)).toBe(true);
+    // List of supported type by the fragment!
+    const supportedType = [
+        'text/plain',
+        'text/markdown',
+        'text/html',
+        'text/csv',
+        'application/json',
+        'image/png',
+        'image/jpeg',
+        'image/webp',
+        'image/avig',
+        'image/gif',
+      ],
+      // Choosing the random index to test the supported type from the list!
+      randomIndex = Math.floor(Math.random() * supportedType.length);
+    // Picking a random type from the list and testing the isSupportedType!
+    expect(Fragment.isSupportedType(supportedType[randomIndex])).toBe(true);
+    // Passing a random string to isSupportedType function to make sure it returns false!
+    expect(Fragment.isSupportedType('dev')).toBe(false);
   });
 });
