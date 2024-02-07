@@ -97,8 +97,12 @@ class Fragment {
    * @returns {string} fragment's mime type (without encoding)
    */
   get mimeType() {
-    const { type } = contentType.parse(this.fragmentMetaData.type);
-    return type;
+    try {
+      const { type } = contentType.parse(this.fragmentMetaData.type);
+      return type;
+    } catch (error) {
+      throw new Error('Invalid content type!');
+    }
   }
 
   /**
@@ -106,7 +110,8 @@ class Fragment {
    * @returns {boolean} true if fragment's type is text/*
    */
   get isText() {
-    return this.fragmentMetaData.type.startsWith('text/');
+    const typeStart = /^text\/.*/i;
+    return typeStart.test(this.fragmentMetaData.type);
   }
 
   /**
@@ -114,6 +119,8 @@ class Fragment {
    * @returns {Array<string>} list of supported mime types
    */
   get formats() {
+    // Returns the text/plain because for this assignment we are only supporting the text/plain type!
+    // When updating this function in future, dont forget to update the test case for this function as well!
     return ['text/plain'];
   }
 
@@ -123,7 +130,21 @@ class Fragment {
    * @returns {boolean} true if we support this Content-Type (i.e., type/subtype)
    */
   static isSupportedType(value) {
-    return value == 'text/plain';
+    // Array of all the supported types!
+    const supportedType = [
+      'text/plain',
+      'text/markdown',
+      'text/html',
+      'text/csv',
+      'application/json',
+      'image/png',
+      'image/jpeg',
+      'image/webp',
+      'image/avig',
+      'image/gif',
+    ];
+    // Returning the boolean if the value passed, is supported!
+    return supportedType.includes(value);
   }
 }
 
