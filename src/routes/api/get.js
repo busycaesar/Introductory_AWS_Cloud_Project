@@ -1,9 +1,5 @@
 // src/routes/api/get.js
 
-// Creating a router to mount API endpoints!
-const express = require('express');
-const router = express.Router();
-
 // Importing all the utility functions helpful in creating the response!
 const { createSuccessResponse, createErrorResponse } = require('../../response');
 const {
@@ -11,18 +7,17 @@ const {
   convertFragment,
   analyzeIdParam,
   getFragmentType,
-  getFragmentMetaData,
 } = require('./fragmentsUtility');
 
 // This API sends all the fragments of the user in an array!
-router.get('/', (req, res) => {
+const getFragments = (req, res) => {
   // If the requst has a query "expand = 1", the user is send all the fragments along with its meta data. Otherwise, just an array of fragments!
   //const fragments = getAllFragments(req.query.expand);
-  res.status(200).json(createSuccessResponse({ fragments: [] }));
-});
+  res?.status(200).json(createSuccessResponse({ fragments: [] }));
+};
 
 // This API get the id and sends the fragment associated with that id!
-router.get('/:id', (req, res) => {
+const getFragmentUsingId = (req, res) => {
   // Checking the id send by the user!
   const { id } = req.params.id;
 
@@ -63,10 +58,10 @@ router.get('/:id', (req, res) => {
 
   // Finally responding with the converted fragment!
   res.status(200).json(createSuccessResponse({ fragment: convertedFragment }));
-});
+};
 
 // This API get the id and sends the metadata of the fragment associated with that id!
-router.get('/:id/info', (req, res) => {
+const getFragmentInfoUsingId = (req, res) => {
   // Checking the id send by the user!
   const { id } = req.params.id;
   const fragment = findFragmentWith(id);
@@ -81,10 +76,9 @@ router.get('/:id/info', (req, res) => {
   }
 
   // Getting the meta data of the fragment!
-  const fragmentMetaData = getFragmentMetaData(fragment);
+  const fragmentMetaData = // getFragmentMetaData(fragment);
+    // Responding to the request with the meta data of the fragment!
+    res.status(201).json(createSuccessResponse({ fragment: fragmentMetaData }));
+};
 
-  // Responding to the request with the meta data of the fragment!
-  res.status(201).json(createSuccessResponse({ fragment: fragmentMetaData }));
-});
-
-module.exports = router;
+module.exports = { getFragments, getFragmentUsingId, getFragmentInfoUsingId };
