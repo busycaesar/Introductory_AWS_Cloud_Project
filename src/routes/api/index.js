@@ -10,8 +10,8 @@ router.get('/fragments', require('./get'));
 
 router.post('/fragments', require('./post'));
 
-router.put('/fragments', require('./put'));
+// router.put('/fragments', require('./put'));
 
-router.delete('/fragments', require('./delete'));
+// router.delete('/fragments', require('./delete'));
 
 module.exports = router;
