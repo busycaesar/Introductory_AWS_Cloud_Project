@@ -4,7 +4,10 @@
 const express = require('express');
 const router = express.Router();
 
-const { getFragments, getFragmentUsingId, getFragmentInfoUsingId } = require('./get');
+const {
+  getFragments,
+  // getFragmentUsingId, getFragmentInfoUsingId
+} = require('./get');
 const { postFragment } = require('./post');
 const rawBody = require('./rawBody');
 
@@ -12,8 +15,8 @@ const rawBody = require('./rawBody');
 
 // GET method!
 router.get('/fragments', getFragments);
-router.get('/fragments/:id', getFragmentUsingId);
-router.get('/fragments/:id/info', getFragmentInfoUsingId);
+// router.get('/fragments/:id', getFragmentUsingId);
+// router.get('/fragments/:id/info', getFragmentInfoUsingId);
 
 // POST method
 router.post('/fragments', rawBody(), postFragment);
