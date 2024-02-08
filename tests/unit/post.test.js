@@ -44,5 +44,8 @@ describe('POST /Fragments', () => {
     const _storedFragmentData = (await new Fragment(fragmentMetaData).getData()).toString('utf-8');
     // Making sure that the post API actually stored the data!
     expect(_storedFragmentData).toBe('This is first fragment data!');
+    const _storedFragmentMetaData = await Fragment.getAllFragments(fragmentMetaData.ownerId, false);
+    expect(Array.isArray(_storedFragmentMetaData)).toBe(true);
+    expect(_storedFragmentMetaData[0]).toBe(fragmentMetaData.id);
   });
 });
