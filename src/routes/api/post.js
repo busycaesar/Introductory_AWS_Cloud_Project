@@ -31,9 +31,9 @@ const postFragment = async (req, res) => {
   await newFragment.setData(fragmentRawData);
 
   // Getting the origin of the url!
-  const URLOrigin = process.env.API_URL || req.headers.host || 'defined',
+  const URLOrigin = process.env.API_URL || req.headers.host,
     // Getting the location of the fragment created in the form of url!
-    location = new URL(`/v1/fragments/${newFragment.fragmentMetaData.id}`, URLOrigin);
+    location = 'temp' || new URL(`/v1/fragments/${newFragment.fragmentMetaData.id}`, URLOrigin);
 
   // Making sure that the location is properly created for the newly created fragment data!
   if (!location) res.status(500).json(createErrorResponse(500, 'Internal Server Error!'));
