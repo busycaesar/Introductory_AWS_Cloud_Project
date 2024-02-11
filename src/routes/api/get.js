@@ -6,12 +6,6 @@ const {
   // createErrorResponse
 } = require('../../response');
 const Fragment = require('../../model/fragment');
-// const {
-//   findFragmentWith,
-//   convertFragment,
-//   analyzeIdParam,
-//   getFragmentType,
-// } = require('./fragmentsUtility');
 
 // This API sends all the fragments of the user in an array!
 const getFragments = async (req, res) => {

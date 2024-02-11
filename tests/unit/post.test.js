@@ -18,11 +18,13 @@ describe('POST /Fragments', () => {
   });
 
   test('authorized users are not able to store the fragments in any other type than text/plain', async () => {
+    // Trying to store unsupported type of fragment content!
     const response = await request(app)
       .post('/v1/fragments')
       .auth('user1@email.com', 'ps1')
       .set('Content-Type', 'text/html')
       .send('This is unsupported data format!');
+    // Making sure it results in an error!
     expect(response.status).toBe(415);
     expect(response.body.status).toBe('Error!');
   });
@@ -44,8 +46,11 @@ describe('POST /Fragments', () => {
     const _storedFragmentData = (await new Fragment(fragmentMetaData).getData()).toString('utf-8');
     // Making sure that the post API actually stored the data!
     expect(_storedFragmentData).toBe('This is first fragment data!');
+    // Getting the list of fragments using the owner id!
     const _storedFragmentMetaData = await Fragment.getAllFragments(fragmentMetaData.ownerId, false);
+    // Making sure it returns an array!
     expect(Array.isArray(_storedFragmentMetaData)).toBe(true);
+    // Making sure the fragment id received is the same as the one in fragment metadata!
     expect(_storedFragmentMetaData[0]).toBe(fragmentMetaData.id);
   });
 });

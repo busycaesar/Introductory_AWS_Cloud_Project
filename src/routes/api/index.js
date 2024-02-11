@@ -21,8 +21,10 @@ router.get('/fragments', getFragments);
 // POST method
 router.post('/fragments', rawBody(), postFragment);
 
+// PUT method
 // router.put('/fragments', require('./put'));
 
+// DELETE method
 // router.delete('/fragments', require('./delete'));
 
 module.exports = router;

@@ -4,11 +4,13 @@ const memory = require('../../src/model/data/memory');
 
 describe('Memory functions to store fragment data and its metadata', () => {
   test('writeFragment writes the fragment metadata!', async () => {
+    // Creating a fragment metadata!
     const fragment = {
       ownerId: '123',
       id: 'abc',
       metaData: 'Testing writeFragment!',
     };
+    // Trying the store the fragment metadata created!
     const promiseResult = await memory.writeFragment(fragment);
     // Making sure that the function resolved the promise. In other words, the function successfully stored the metadata.
     expect(promiseResult).resolves;
@@ -60,6 +62,7 @@ describe('Memory functions to store fragment data and its metadata', () => {
   });
 
   test('listFragments should promise to return a list of fragment ids/objects', async () => {
+    // Creating multiple fragment metadata!
     const frag1 = {
         id: '0.0',
         metadata: 'I am the metadata of the fragment!',

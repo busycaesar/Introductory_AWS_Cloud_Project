@@ -1,7 +1,6 @@
 // tests/unit/get.test.js
 
 const request = require('supertest');
-
 const app = require('../../src/app');
 
 describe('GET /v1/fragments', () => {
@@ -15,7 +14,9 @@ describe('GET /v1/fragments', () => {
 
   // Using a valid username/password pair should give a success result with a .fragments array
   test('authenticated users get a fragments array', async () => {
+    // Storing the response of the get request along with passing true credentials!
     const response = await request(app).get('/v1/fragments').auth('user1@email.com', 'ps1');
+    // Making sure the status code of the response is correct!
     expect(response.statusCode).toBe(200);
     expect(response.body.status).toBe('Okay!');
     // Making sure that the data of Array type is returned in the response!
