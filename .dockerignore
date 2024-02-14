@@ -1,0 +1,12 @@
+# Here are all the files/folders we dont require in our docker container.
+.github/
+.vscode/
+coverage/
+node_modules/
+tests/
+.env
+.eslintrc.js
+.git/
+.gitignore
+.prettier*
+jest*
