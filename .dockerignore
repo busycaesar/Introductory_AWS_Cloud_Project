@@ -4,6 +4,8 @@
 coverage/
 node_modules/
 tests/
+# Although we dont want the test directory into our container, we do need .htpasswd file!
+!tests/.htpasswd
 .env
 .eslintrc.js
 .git/
