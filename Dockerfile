@@ -33,6 +33,7 @@ RUN npm install
 
 # Once all the dependencies are installed, we would copy the code into the image.
 COPY ./src ./src
+COPY ./tests/.htpasswd ./tests/.htpasswd
 
 # Telling the Docker to start the process using the command.
 # This command can be executed using CMD [command] vs RUN [command]. We use the later to setup all the node dependencies which has nothing to do with the Docker container. However, to instruct the Docker, the former can be used.
