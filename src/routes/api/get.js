@@ -80,6 +80,6 @@ const getFragmentInfoUsingId = async (req, res) => {
 
 module.exports = {
   getFragments,
-  //getFragmentUsingId,
+  // getFragmentUsingId,
   getFragmentInfoUsingId,
 };
