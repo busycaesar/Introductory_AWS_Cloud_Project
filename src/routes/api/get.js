@@ -1,10 +1,7 @@
 // src/routes/api/get.js
 
 // Importing all the utility functions helpful in creating the response!
-const {
-  createSuccessResponse,
-  // createErrorResponse
-} = require('../../response');
+const { createSuccessResponse, createErrorResponse } = require('../../response');
 const Fragment = require('../../model/fragment');
 
 // This API sends all the fragments of the user in an array!
@@ -58,28 +55,31 @@ const getFragments = async (req, res) => {
 //   res.status(200).json(createSuccessResponse({ fragment: convertedFragment }));
 // };
 
-// // This API get the id and sends the metadata of the fragment associated with that id!
-// const getFragmentInfoUsingId = (req, res) => {
-//   // Checking the id send by the user!
-//   const { id } = req.params.id;
-//   const fragment = findFragmentWith(id);
+// This API get the id and sends the metadata of the fragment associated with that id!
+const getFragmentInfoUsingId = async (req, res) => {
+  // Getting the fragment id!
+  const fragmentId = req.params.id;
+  // Getting the fragment metadata with the fragment and owner id!
+  const fragmentMetaData = await Fragment.getFragment(req.user, fragmentId);
+  // Making sure the fragment meta data associated with the id received exists!
+  if (!fragmentMetaData) {
+    res
+      .status(404)
+      .json(
+        createErrorResponse(
+          404,
+          `Check the id! There is no fragment stored with the id ${fragmentId}!`
+        )
+      );
+    return;
+  }
 
-//   if (!fragment) {
-//     res
-//       .status(404)
-//       .json(
-//         createErrorResponse(404, `Check the id! There is no fragment stored with the id ${id}!`)
-//       );
-//     return;
-//   }
-
-//   // Getting the meta data of the fragment!
-//   const fragmentMetaData = // getFragmentMetaData(fragment);
-//     // Responding to the request with the meta data of the fragment!
-//     res.status(201).json(createSuccessResponse({ fragment: fragmentMetaData }));
-// };
+  // Responding to the request with the meta data of the fragment!
+  res.status(201).json(createSuccessResponse({ fragment: fragmentMetaData }));
+};
 
 module.exports = {
   getFragments,
-  // getFragmentUsingId, getFragmentInfoUsingId
+  //getFragmentUsingId,
+  getFragmentInfoUsingId,
 };
