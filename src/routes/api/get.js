@@ -10,7 +10,6 @@ const Fragment = require('../../model/fragment');
 // This API sends all the fragments of the user in an array!
 const getFragments = async (req, res) => {
   // If the requst has a query "expand = 1", the user is send all the fragments along with its meta data. Otherwise, just an array of fragments!
-  //const fragments = getAllFragments(req.query.expand);
   const userFragments = await Fragment.getAllFragments(req.user, req.query.expand);
   res?.status(200).json(createSuccessResponse({ fragments: userFragments }));
 };
