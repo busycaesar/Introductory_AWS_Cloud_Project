@@ -45,9 +45,22 @@ describe('GET /v1/fragments', () => {
 
 describe('GET /v1/fragments/?expand=1', () => {
   test('Whole metadata is returned with expand query', async () => {
+    // Create fragments
+    const hashedOwnerId = hash('user1@email.com');
+    const fragMetadata1 = new Fragment({ id: 'rdmId', ownerId: hashedOwnerId, type: 'text/plain' }),
+      fragMetadata2 = new Fragment({ id: 'rdmId2', ownerId: hashedOwnerId, type: 'text/plain' });
+    // Store the fragments for the authenticated user!
+    fragMetadata1.save();
+    fragMetadata2.save();
+    // Request the fragments for the autheticated user!
     // Storing the response of the get request along with passing true credentials!
     const response = await request(app)
       .get('/v1/fragments/?expand=1')
       .auth('user1@email.com', 'ps1');
+    // Make sure the returned array is the same id as the stored ones!
+    expect(response.body.fragments[0].id).toBe('rdmId');
+    expect(response.body.fragments[1].id).toBe('rdmId2');
+    expect(response.body.fragments[0].ownerId).toBe(hashedOwnerId);
+    expect(response.body.fragments[1].ownerId).toBe(hashedOwnerId);
   });
 });
