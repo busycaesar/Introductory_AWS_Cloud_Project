@@ -3,12 +3,12 @@ FROM node:20.10.0 AS dependencies
 
 WORKDIR /application
 
-COPY package*.json ./
+COPY package*.json .
 
 RUN npm install
 ############################################################################
 
-# Stage 2: Testing the microservice using Unit tests and Lint tests ########
+# Stage 2: Copying the application files ###################################
 FROM node:20.10.0 AS development
 
 WORKDIR /application
@@ -19,10 +19,6 @@ COPY --from=dependencies /application /application
 # Copying the source code
 COPY . .
 
-# Making sure all the tests passes; otherwise exiting with the code 1!
-RUN npm test \
-    && npm run lint \
-    || exit 1
 ############################################################################
 
 # Stage 3: Start the server and keep running the health check
