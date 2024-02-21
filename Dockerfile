@@ -8,7 +8,7 @@ COPY package* ./
 RUN npm install
 ############################################################################
 
-# Stage 2: Copying the application files ###################################
+# Stage 2: Copy the application files ######################################
 FROM node:20.10.0 AS development
 
 WORKDIR /application
