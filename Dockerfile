@@ -3,7 +3,7 @@ FROM node:20.10.0 AS dependencies
 
 WORKDIR /application
 
-COPY package*.json .
+COPY package* ./
 
 RUN npm install
 ############################################################################
@@ -17,7 +17,8 @@ WORKDIR /application
 COPY --from=dependencies /application /application
 
 # Copying the source code
-COPY . .
+COPY ./src ./src
+COPY ./tests/.htpasswd ./tests/.htpasswd
 
 ############################################################################
 
@@ -28,6 +29,8 @@ LABEL maintainer="Dev <djshah11@myseneca.ca>" \
       description="Fragments Microservice"
 
 ENV PORT=8080
+
+WORKDIR /application
 
 # Copying the application from development stage!
 COPY --from=development /application /application
