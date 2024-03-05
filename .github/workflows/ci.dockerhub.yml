@@ -1,26 +1,20 @@
 # .github/workflows/ci.yml
 
 # Continuous Integration Workflow
-name: ci docker
+name: ci dockerhub
 
 # This work flow is expected to run whenever we push commits to the Master branch or whenever there is a PR to the Master branch.
 # https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#on
 
 on:
-  pull_request:
-    branches:
-      - Master
-
-  push:
-    branches:
-      - Master
+  workflow_run:
+    workflows: ['ci docker', 'ci lint', 'ci test']
 
 env:
   API_URL: http://localhost:8080
 
 # Defining a job which runs when the above condition is fullfilled.
 jobs:
-  # Defining the job named lint to be runned.
   dockerfile-lint:
     # This is the human readable name given to the job shows up on the GitHub Actions web UI!
     name: Dockerfile Lint
