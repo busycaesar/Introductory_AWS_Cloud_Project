@@ -7,13 +7,8 @@ name: ci test
 # https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#on
 
 on:
-  pull_request:
-    branches:
-      - Master
-
-  push:
-    branches:
-      - Master
+  workflow_run:
+    workflows: ['ci dockerlint']
 
 env:
   API_URL: http://localhost:8080

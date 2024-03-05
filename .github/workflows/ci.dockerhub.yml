@@ -8,7 +8,7 @@ name: ci dockerhub
 
 on:
   workflow_run:
-    workflows: ['ci docker', 'ci lint', 'ci test']
+    workflows: ['ci test']
 
 env:
   API_URL: http://localhost:8080
