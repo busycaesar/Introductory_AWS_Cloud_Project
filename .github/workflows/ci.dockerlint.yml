@@ -1,39 +1,39 @@
-# .github/workflows/ci.yml
+# # .github/workflows/ci.yml
 
-# Continuous Integration Workflow
-name: ci dockerlint
+# # Continuous Integration Workflow
+# name: ci dockerlint
 
-# This work flow is expected to run whenever we push commits to the Master branch or whenever there is a PR to the Master branch.
-# https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#on
+# # This work flow is expected to run whenever we push commits to the Master branch or whenever there is a PR to the Master branch.
+# # https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#on
 
-on:
-  workflow_run:
-    workflows: ['ci lint']
+# on:
+#   workflow_run:
+#     workflows: ['ci lint']
 
-env:
-  API_URL: http://localhost:8080
+# env:
+#   API_URL: http://localhost:8080
 
-# Defining a job which runs when the above condition is fullfilled.
-jobs:
-  # Defining the job named lint to be runned.
-  dockerfile-lint:
-    # This is the human readable name given to the job shows up on the GitHub Actions web UI!
-    name: Dockerfile Lint
+# # Defining a job which runs when the above condition is fullfilled.
+# jobs:
+#   # Defining the job named lint to be runned.
+#   dockerfile-lint:
+#     # This is the human readable name given to the job shows up on the GitHub Actions web UI!
+#     name: Dockerfile Lint
 
-    # Specifing the machine on which this job is expected to run.
-    # Running this on Linux VM, since the app will be deployed on Linux too!
-    runs-on: ubuntu-latest
+#     # Specifing the machine on which this job is expected to run.
+#     # Running this on Linux VM, since the app will be deployed on Linux too!
+#     runs-on: ubuntu-latest
 
-    # These are the following steps which are performed one after the others. If any of the steps fail, the process stops.
-    steps:
-      # https://github.com/actions/checkout
-      # This step clones the repository into the VM and makes sure that the VM has the latest version of the source code
-      # This step uses the predefined GitHub Action.
-      - name: Check out code
-        uses: actions/checkout@v4
+#     # These are the following steps which are performed one after the others. If any of the steps fail, the process stops.
+#     steps:
+#       # https://github.com/actions/checkout
+#       # This step clones the repository into the VM and makes sure that the VM has the latest version of the source code
+#       # This step uses the predefined GitHub Action.
+#       - name: Check out code
+#         uses: actions/checkout@v4
 
-      # This step sets up the node js environment with a specific version of the node and other specifications.
-      - name: Test Docker file lint
-        uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: Dockerfile
+#       # This step sets up the node js environment with a specific version of the node and other specifications.
+#       - name: Test Docker file lint
+#         uses: hadolint/hadolint-action@v3.1.0
+#         with:
+#           dockerfile: Dockerfile

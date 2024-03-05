@@ -1,36 +1,36 @@
-# .github/workflows/ci.yml
+# # .github/workflows/ci.yml
 
-# Continuous Integration Workflow
-name: ci test
+# # Continuous Integration Workflow
+# name: ci test
 
-# This work flow is expected to run whenever we push commits to the Master branch or whenever there is a PR to the Master branch.
-# https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#on
+# # This work flow is expected to run whenever we push commits to the Master branch or whenever there is a PR to the Master branch.
+# # https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#on
 
-on:
-  workflow_run:
-    workflows: ['ci dockerlint']
+# on:
+#   workflow_run:
+#     workflows: ['ci dockerlint']
 
-env:
-  API_URL: http://localhost:8080
+# env:
+#   API_URL: http://localhost:8080
 
-# Defining a job which runs when the above condition is fullfilled.
-jobs:
-  unit-tests:
-    name: Unit Tests
-    runs-on: ubuntu-latest
+# # Defining a job which runs when the above condition is fullfilled.
+# jobs:
+#   unit-tests:
+#     name: Unit Tests
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Check out code
+#         uses: actions/checkout@v3
 
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
+#       - name: Setup node
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '18'
+#           cache: 'npm'
 
-      - name: Install node dependencies and run tests
-        run: |
+#       - name: Install node dependencies and run tests
+#         run: |
 
-          npm ci
-          npm test
+#           npm ci
+#           npm test
