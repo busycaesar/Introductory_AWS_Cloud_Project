@@ -1,7 +1,7 @@
 # .github/workflows/ci.yml
 
 # Continuous Integration Workflow
-name: ci lint
+name: CI Workflow
 
 # This work flow is expected to run whenever we push commits to the Master branch or whenever there is a PR to the Master branch.
 # https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#on
@@ -55,3 +55,46 @@ jobs:
       # This step runnes the ESLint. It assumes that there would be a script in the package.json named Lint.
       - name: Run ESLint
         run: npm run lint
+
+  # Defining the job named lint to be runned.
+  dockerfile-lint:
+    # This is the human readable name given to the job shows up on the GitHub Actions web UI!
+    name: Dockerfile Lint
+
+    # Specifing the machine on which this job is expected to run.
+    # Running this on Linux VM, since the app will be deployed on Linux too!
+    runs-on: ubuntu-latest
+
+    # These are the following steps which are performed one after the others. If any of the steps fail, the process stops.
+    steps:
+      # https://github.com/actions/checkout
+      # This step clones the repository into the VM and makes sure that the VM has the latest version of the source code
+      # This step uses the predefined GitHub Action.
+      - name: Check out code
+        uses: actions/checkout@v4
+
+        # This step sets up the node js environment with a specific version of the node and other specifications.
+      - name: Test Docker file lint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install node dependencies and run tests
+        run: |
+
+          npm ci
+          npm test
