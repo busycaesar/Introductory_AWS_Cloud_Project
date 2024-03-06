@@ -1,0 +1,64 @@
+# .github/workflows/cd.yml
+
+# Continuous Integration Workflow
+
+# This work flow is trigged when a new tag is pushed.
+
+name: CD Workflow
+
+on:
+  push:
+    # Whenever a tag is pushed.
+    tags:
+      # Tag starting with v.
+      - 'v**'
+
+jobs:
+
+  # Assume that the CI Workflow jobs have already passed.
+  # We dont tag a commit untill the build is working.
+  aws:
+    name: AWS
+    runs-on: ubuntu-latest
+    steps:
+
+      # Check out the code from git.
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Setup buildx to build docker image.
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Configuring the AWS account using credentials.
+      - name: Configure AWS credentials using secrets
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          # Hardcoding the region since it is not changing and nor a secret.
+          aws-region: us-east-1
+
+      # Log into the Amazon ECR.
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      # Build and push image to Amazon ECR.
+      - name: Build, push to Amazon ECR
+        env:
+          # Get the Amazon ECR registry URI from the output of the previous step.
+          ECR_REGISTRY: ${{steps.login-ecr.outputs.registry}}
+          # Repositroy name
+          ECR_REPO: fragments
+          # This image will have two tags. One is latest and the other is the version of the project.
+          # Get the tag used in the commit. This git tag will be the version of the project.
+          VERSION_TAG: ${{github.ref_name}}
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: ${{env.ECR_REGISTRY}}/${{env.ECR_REPO}}:${{env.VERSION_TAG}},
+            ${{env.ECR_REGISTRY}}/${{env.ECR_REPO}}:latest
+        
+
