@@ -1,0 +1,25 @@
+{
+  "employees": [
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com",
+      "age": 30,
+      "department": "Marketing"
+    },
+    {
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "jane.smith@example.com",
+      "age": 35,
+      "department": "Sales"
+    },
+    {
+      "firstName": "Michael",
+      "lastName": "Johnson",
+      "email": "michael.johnson@example.com",
+      "age": 40,
+      "department": "Finance"
+    }
+  ]
+}
