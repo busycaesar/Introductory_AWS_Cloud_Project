@@ -19,7 +19,6 @@ COPY --from=dependencies /application /application
 # Copying the source code
 COPY ./src ./src
 COPY ./tests/.htpasswd ./tests/.htpasswd
-
 ############################################################################
 
 # Stage 3: Start the server and keep running the health check
