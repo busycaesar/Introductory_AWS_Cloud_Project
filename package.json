@@ -10,7 +10,10 @@
     "lint": "eslint --config .eslintrc.js \"./src/**/*.js\" \"tests/**/*.js\"",
     "start": "node src/index.js",
     "dev": "cross-env LOG_LEVEL=debug nodemon ./src/index.js --watch src",
-    "debug": "cross-env LOG_LEVEL=debug nodemon --inspect=0.0.0.0:9229 ./src/index.js --watch src"
+    "debug": "cross-env LOG_LEVEL=debug nodemon --inspect=0.0.0.0:9229 ./src/index.js --watch src",
+    "docker": "docker build -t fragments .",
+    "docker-bash": "docker run --rm --init --name fragments -it fragments bash",
+    "docker-run": "docker run --rm --init --name fragments -p 8080:80 fragments"
   },
   "repository": {
     "type": "git",
