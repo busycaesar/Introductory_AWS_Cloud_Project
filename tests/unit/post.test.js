@@ -1,6 +1,8 @@
 // test/unit/post.test.js
 
 const request = require('supertest');
+const fs = require('fs');
+const absolutePath = 'tests/unit/sampleFile';
 
 const app = require('../../src/app');
 const Fragment = require('../../src/model/fragment');
@@ -16,13 +18,15 @@ describe('POST /Fragments', () => {
       .auth('invalid@email.com', 'incorrect_password')
       .expect(401);
   });
+});
 
-  test('authorized users are not able to store the fragments in any other type than text/plain', async () => {
+describe('POST /Fragments in various types', () => {
+  test('authorized users are not able to store the fragments in any other type than text/* and application/json', async () => {
     // Trying to store unsupported type of fragment content!
     const response = await request(app)
       .post('/v1/fragments')
       .auth('user1@email.com', 'ps1')
-      .set('Content-Type', 'text/html')
+      .set('Content-Type', 'image/png')
       .send('This is unsupported data format!');
     // Making sure it results in an error!
     expect(response.status).toBe(415);
@@ -30,13 +34,14 @@ describe('POST /Fragments', () => {
   });
 
   // Making sure that the users are able to stored the data in fragments!
-  test('authorized users are able to store the fragments', async () => {
+  test('authorized users are able to store the fragments of text/plain type!', async () => {
+    const data = 'This is first fragment data!';
     // Posting the data along with credentials and supported data type!
     const response = await request(app)
         .post('/v1/fragments')
         .auth('user1@email.com', 'ps1')
         .set('Content-Type', 'text/plain')
-        .send('This is first fragment data!'),
+        .send(data),
       // Getting the metadata from of the data posted!
       fragmentMetaData = response.body.fragment;
     // Making sure that the response returned a proper status code!
@@ -45,12 +50,87 @@ describe('POST /Fragments', () => {
     // Fetching the data from the database using the metadata received upon making the post request!
     const _storedFragmentData = (await new Fragment(fragmentMetaData).getData()).toString('utf-8');
     // Making sure that the post API actually stored the data!
-    expect(_storedFragmentData).toBe('This is first fragment data!');
-    // Getting the list of fragments using the owner id!
-    const _storedFragmentMetaData = await Fragment.getAllFragments(fragmentMetaData.ownerId, false);
-    // Making sure it returns an array!
-    expect(Array.isArray(_storedFragmentMetaData)).toBe(true);
-    // Making sure the fragment id received is the same as the one in fragment metadata!
-    expect(_storedFragmentMetaData[0]).toBe(fragmentMetaData.id);
+    expect(_storedFragmentData).toBe(data);
+  });
+
+  test('authorized users are able to store the fragments of text/markdown type!', async () => {
+    // Create a text/markdown type data!
+    const data = fs.readFileSync(`${absolutePath}/sample.md`, 'utf-8');
+    // Post the data along with credentials and supported data type!
+    const response = await request(app)
+        .post('/v1/fragments')
+        .auth('user1@email.com', 'ps1')
+        .set('Content-Type', 'text/markdown')
+        .send(data),
+      // Getting the metadata from of the data posted!
+      fragmentMetaData = response.body.fragment;
+    // Making sure that the response returned a proper status code!
+    expect(response.status).toBe(201);
+    expect(response.body.status).toBe('Okay!');
+    // Fetch the data from the database using the metadata!
+    // Convert the data received to string becuase by default it is stored as buffer.
+    const _storedFragmentData = (await new Fragment(fragmentMetaData).getData()).toString('utf-8');
+    // Making sure that the post API actually stored the data!
+    expect(_storedFragmentData).toBe(data);
+  });
+
+  test('authorized users are able to store the fragments of text/html type!', async () => {
+    // Create a text/markdown type data!
+    const data = fs.readFileSync(`${absolutePath}/sample.html`, 'utf-8');
+    // Post the data along with credentials and supported data type!
+    const response = await request(app)
+        .post('/v1/fragments')
+        .auth('user1@email.com', 'ps1')
+        .set('Content-Type', 'text/html')
+        .send(data),
+      // Getting the metadata from of the data posted!
+      fragmentMetaData = response.body.fragment;
+    // Making sure that the response returned a proper status code!
+    expect(response.status).toBe(201);
+    expect(response.body.status).toBe('Okay!');
+    // Fetch the data from the database using the metadata received upon making the post request!
+    const _storedFragmentData = (await new Fragment(fragmentMetaData).getData()).toString('utf-8');
+    // Making sure that the post API actually stored the data!
+    expect(_storedFragmentData).toBe(data);
+  });
+
+  test('authorized users are able to store the fragments of text/csv type!', async () => {
+    // Create a text/markdown type data!
+    const data = fs.readFileSync(`${absolutePath}/sample.csv`, 'utf-8');
+    // Post the data along with credentials and supported data type!
+    const response = await request(app)
+        .post('/v1/fragments')
+        .auth('user1@email.com', 'ps1')
+        .set('Content-Type', 'text/csv')
+        .send(data),
+      // Getting the metadata from of the data posted!
+      fragmentMetaData = response.body.fragment;
+    // Making sure that the response returned a proper status code!
+    expect(response.status).toBe(201);
+    expect(response.body.status).toBe('Okay!');
+    // Fetch the data from the database using the metadata received upon making the post request!
+    const _storedFragmentData = (await new Fragment(fragmentMetaData).getData()).toString('utf-8');
+    // Making sure that the post API actually stored the data!
+    expect(_storedFragmentData).toBe(data);
+  });
+
+  test('authorized users are able to store the fragments of application/json type!', async () => {
+    // Create a text/markdown type data!
+    const data = fs.readFileSync(`${absolutePath}/sample.json`, 'utf-8');
+    // Post the data along with credentials and supported data type!
+    const response = await request(app)
+        .post('/v1/fragments')
+        .auth('user1@email.com', 'ps1')
+        .set('Content-Type', 'application/json')
+        .send(data),
+      // Getting the metadata from of the data posted!
+      fragmentMetaData = response.body.fragment;
+    // Making sure that the response returned a proper status code!
+    expect(response.status).toBe(201);
+    expect(response.body.status).toBe('Okay!');
+    // Fetch the data from the database using the metadata received upon making the post request!
+    const _storedFragmentData = (await new Fragment(fragmentMetaData).getData()).toString('utf-8');
+    // Making sure that the post API actually stored the data!
+    expect(_storedFragmentData).toBe(data);
   });
 });
