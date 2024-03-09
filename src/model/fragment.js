@@ -133,10 +133,10 @@ class Fragment {
     // Array of all the supported types!
     const supportedType = [
       'text/plain',
-      // 'text/markdown',
-      // 'text/html',
-      // 'text/csv',
-      // 'application/json',
+      'text/markdown',
+      'text/html',
+      'text/csv',
+      'application/json',
       // 'image/png',
       // 'image/jpeg',
       // 'image/webp',
