@@ -22,59 +22,50 @@ Promise: Once the fragment is stored successfully, this request returns a locati
 
 ## How to run the project
 
-To set up this project, follow the below steps:
+Clone this repository and install all the dependencies using `npm install`.
 
-1. Clone this repository.
-2. Make sure you have Node installed in the device.
-3. Open this project in any code editor and start the terminal.
-4. In the terminal type the following. This will install all the dependencies of the project.
-
-```bash
-npm install
-```
-
-5. Following are few commands which can be used run the test cases.
-
-```bash
-npm run lint
-```
-
-This command will check for any linting errors throught the project. This prevents any potential error from happening and makes sure that there is a consistency throught the project.
-
-```bash
-npm test:watch
-```
-
-This command runs runs all the test cases in a development mode. It keeps rerunning the test cases everytime there is a change in any of the file.
-
-```bash
-npm test
-```
-
-This command runs all the test cases once and displays the result.
-
-```bash
-npm coverage
-```
-
-This command displays the percentage of code being tested from each file. The ideal percentage should be between 80% - 100%. In other words, atleast 80% lines of code from each file should be tested.
-
-6. Finally, following are the scripts to run this code.
+Start the server in development mode (Server restarts automatically whenever any file in the server is modified and saved)
 
 ```bash
 npm run dev
 ```
 
-This command will start the server in the development environment. It uses nodemon which restarts the server everytime there is some change in any of the file.
+Start the server in production mode
 
 ```bash
 npm start
 ```
 
-This command will simply start the server. To view any change in the file, the server needs to be restarted manually.
+Start the server in production mode and print the debug logs. 
 
 ```bash
 npm run debug
 ```
 
-This command starts the server in the debugging mode. It sets the LOG_LEVEL to debug stops at all the breaking points as per the assigned conditions.
+## Test Scripts
+
+Following are the scripts for testing the project:
+
+Run lint tests
+
+```bash
+npm run lint
+```
+
+Run tests. By default it runs all the tests mentioned in the test/ directory. To run the tests of a specific file, the name of the file can be passed as an argument with the command.
+
+```bash
+npm test <(optional) file name>
+```
+
+Run tests in development mode (The command is reexecuted whenever any test case is modified and saved). By default it runs all the tests mentioned in the test/ directory. To run the tests of a specific file, the name of the file can be passed as an argument with the command.
+
+```bash
+npm test:watch
+```
+
+Check the coverage of tests
+
+```bash
+npm coverage
+```
