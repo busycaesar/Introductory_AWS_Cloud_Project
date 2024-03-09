@@ -13,10 +13,10 @@ Node.js, Express.js, Jest, AWS Cognito, AWS EC2 Instance
 ### Note: All the requests should have the authorization token in the Header. 
 
 ### GET 
-1. /v1/fragments: This request returns an array of fragments stored by the user.
+1. /v1/fragments: Get an array of fragments stored by the user.
 
 ### POST
-1. /v1/fragments: This request is used to store a new fragment.
+1. /v1/fragments: Store a new fragment.
 Requirements: The header should have a Content Type property, the value of which would be the type of the fragment the user intends to store.
 Promise: Once the fragment is stored successfully, this request returns a location property in the response. This property includes a URL which can be used to access the stored fragment.
 
