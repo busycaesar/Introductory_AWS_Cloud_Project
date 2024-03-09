@@ -10,7 +10,7 @@ Node.js, Express.js, Jest, AWS Cognito, AWS EC2 Instance
 
 ## List of APIs
 
-### Note: All the requests should have the authorization token in the Header. 
+**Note**: All the requests should have the authorization token in the Header. 
 
 ### GET 
 1. `/v1/fragments`: Get an array of fragments stored by the user.
