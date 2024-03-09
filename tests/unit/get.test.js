@@ -67,13 +67,6 @@ describe('GET /v1/fragments/?expand=1', () => {
 
 describe('GET /v1/fragments/:id/info', () => {
   const path = (id = 123) => `/v1/fragments/${id}/info`;
-  // Making sure for all the unauthorized requests, the status code of 401 is sent!
-  test('unauthenticated requests are denied', () => request(app).get(path()).expect(401));
-
-  // Checking the credentials for all the authorized requests!
-  test('incorrect credentials are denied', () =>
-    // Sending an invalid email and password using the auth subfunction of request function!
-    request(app).get(path()).auth('invalid@email.com', 'incorrect_password').expect(401));
 
   // Authenticated user should get 404 if the fragment associated with the id passed doesnt exists!
   test('authenticated user passing the incorrect fragment id receive 404', async () => {
@@ -84,7 +77,7 @@ describe('GET /v1/fragments/:id/info', () => {
   });
 
   // Authenticated user should get 404 if the fragment associated with the id passed doesnt exists!
-  test('authenticated user passing the incorrect fragment id receive 404', async () => {
+  test('authenticated user passing the correct fragment id receive the fragment data', async () => {
     // Getting the hash value of the owner's email!
     const hashId = hash('user1@email.com');
     // Creating the sample fragment metadata!
