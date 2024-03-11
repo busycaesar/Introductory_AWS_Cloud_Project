@@ -86,15 +86,13 @@ describe('Fragment Class', () => {
     // Testing the isText function of the fragment object to make sure it returns the expected result according to the stored type in the meta data!
     expect(_fragment.isText).toBe(true);
     expect(_fragment2.isText).toBe(false);
-    // Making sure the formats function of the framgnet object returns an array type!
-    expect(Array.isArray(_fragment.formats)).toBe(true);
     // List of supported type by the fragment!
     const supportedType = [
         'text/plain',
-        // 'text/markdown',
-        // 'text/html',
-        // 'text/csv',
-        // 'application/json',
+        'text/markdown',
+        'text/html',
+        'text/csv',
+        'application/json',
         // 'image/png',
         // 'image/jpeg',
         // 'image/webp',
@@ -107,5 +105,18 @@ describe('Fragment Class', () => {
     expect(Fragment.isSupportedType(supportedType[randomIndex])).toBe(true);
     // Passing a random string to isSupportedType function to make sure it returns false!
     expect(Fragment.isSupportedType('dev')).toBe(false);
+  });
+
+  test('format conversion testing', () => {
+    // Create a metadata
+    const metaData = { id: '31124', ownerId: '848', type: 'text/markdown; charset=utf-8' },
+      metaData2 = { id: '311242', ownerId: '848', type: 'text/something' };
+    // Creating a few fragment objects and passing the meta datas created!
+    const _fragment = new Fragment(metaData),
+      _fragment2 = new Fragment(metaData2);
+    // Make sure it returns an array.
+    expect(Array.isArray(_fragment.formats)).toBe(true);
+    // Make sure invalid format type returns false.
+    expect(_fragment2.formats).toBe(false);
   });
 });
