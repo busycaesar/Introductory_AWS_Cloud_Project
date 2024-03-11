@@ -39,6 +39,7 @@
     "helmet": "^7.1.0",
     "http-auth": "^4.2.0",
     "http-auth-passport": "^1.0.7",
+    "markdown-it": "^14.0.0",
     "passport": "^0.7.0",
     "passport-http-bearer": "^1.0.1",
     "pino": "^8.17.2",
