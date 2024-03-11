@@ -101,6 +101,35 @@ describe('GET /v1/fragments/:id/info', () => {
 });
 
 describe('GET /v1/fragments/:id.ext', () => {
+  test('Authenticated user gets error with the incorrect fragment id', async () => {
+    // Make GET request with invalid fragment id.
+    const response = await request(app).get('/v1/fragments/657').auth('user1@email.com', 'ps1');
+    // Make sure it returns Error 404.
+    expect(response.status).toBe(404);
+  });
+
+  test('Authenticated user gets error with the unsupported and invalid extension requirement with valid fragment id', async () => {
+    // Get owner id.
+    const ownerId = hash('user1@email.com');
+    // Create sample data.
+    const data = 'Sample text/plain data';
+    // Create a fragment metadata.
+    const metaData = { id: '705PM', ownerId: ownerId, type: 'text/plain' };
+    // Create a fragment object.
+    const fragment = new Fragment(metaData);
+    // Store data into fragment object.
+    await fragment.setData(data);
+    // Store the fragment object.
+    await fragment.save();
+    // Make the get request
+    const response1 = await request(app)
+        .get('/v1/fragments/705PM.png')
+        .auth('user1@email.com', 'ps1'),
+      response2 = await request(app).get('/v1/fragments/705PM.dev').auth('user1@email.com', 'ps1');
+    // Make sure it return Error code 415.
+    expect(response1.status && response2.status).toBe(415);
+  });
+
   test("Authenticated user gets the existing fragment's data with the expected content-type", async () => {
     // Get owner id
     const ownerId = hash('user1@email.com');
