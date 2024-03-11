@@ -3,7 +3,8 @@
 const { randomUUID } = require('crypto');
 // Use https://www.npmjs.com/package/content-type to create/parse Content-Type headers
 const contentType = require('content-type');
-
+const markdownIt = require('markdown-it');
+const md = markdownIt();
 // Functions for working with fragment metadata/data using our DB
 const {
   readFragment,
@@ -160,6 +161,14 @@ class Fragment {
     ];
     // Returning the boolean if the value passed, is supported!
     return supportedType.includes(value);
+  }
+
+  async getConvertedInto(type) {
+    const fragmentData = await this.getData();
+    // Convert fragment data into the received type.
+    // For now, we only support converting from markdown to HTML; hence, the data is by default converted into HTML.
+    // Update this function in future when supporting other type conversions.
+    if (type === '.html') return md.render(fragmentData);
   }
 }
 
