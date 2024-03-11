@@ -70,7 +70,7 @@ class Fragment {
   }
 
   /**
-   * Gets the fragment's data from the database
+   * Get the fragment's data from the database
    * @returns Promise<Buffer>
    */
   async getData() {
@@ -119,9 +119,24 @@ class Fragment {
    * @returns {Array<string>} list of supported mime types
    */
   get formats() {
+    const validConversions = {
+      'text/plain': ['.txt'],
+      'text/markdown': [
+        '.md',
+        '.html',
+        //  '.txt'
+      ],
+      // 'text/html': ['.html', '.txt'],
+      // 'text/csv': ['.csv', '.txt', '.json'],
+      // 'application/json': ['.json', '.txt'],
+      // 'image/png': ['.png', '.jpg', '.webp', '.gif', '.avif'],
+      // 'image/jpeg': ['.png', '.jpg', '.webp', '.gif', '.avif'],
+      // 'image/webp': ['.png', '.jpg', '.webp', '.gif', '.avif'],
+      // 'image/avif': ['.png', '.jpg', '.webp', '.gif', '.avif'],
+      // 'image/gif': ['.png', '.jpg', '.webp', '.gif', '.avif'],
+    };
     // Returns the text/plain because for this assignment we are only supporting the text/plain type!
-    // When updating this function in future, dont forget to update the test case for this function as well!
-    return ['text/plain'];
+    return validConversions[this.mimeType] || false;
   }
 
   /**
