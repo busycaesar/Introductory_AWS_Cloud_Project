@@ -32,20 +32,19 @@ const extractExtensionRequested = (query) => {
 const getFragmentUsingId = async (req, res) => {
   // Get the fragment id send by the user.
   const id = req.params.id;
-
   // Get the requested extension if passed in the query.
   const { fragmentId, requestedExtension } = extractExtensionRequested(id);
   // Get the owner id from the request object.
   const ownerId = req.user;
 
-  // Get the fragments meta data using the fragment id and owner id.
-  const fragmentMetaData = await Fragment.getFragment(ownerId, fragmentId);
+  let fragmentMetaData, fragment;
 
-  // Create the fragment object by passing the fragment metadata.
-  const fragment = new Fragment(fragmentMetaData);
-
-  // Return 404, if no fragments are present with the received it.
-  if (!fragment) {
+  try {
+    // Get the fragments meta data using the fragment id and owner id.
+    fragmentMetaData = await Fragment.getFragment(ownerId, fragmentId);
+    // Create the fragment object by passing the fragment metadata.
+    fragment = new Fragment(fragmentMetaData);
+  } catch (error) {
     res
       .status(404)
       .json(
