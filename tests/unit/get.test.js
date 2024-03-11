@@ -4,6 +4,8 @@ const request = require('supertest');
 const app = require('../../src/app');
 const Fragment = require('../../src/model/fragment');
 const hash = require('../../src/hash');
+const markdownIt = require('markdown-it');
+const md = markdownIt();
 
 describe('GET /v1/fragments', () => {
   // Making sure for all the unauthorized requests, the status code of 401 is sent!
@@ -96,5 +98,61 @@ describe('GET /v1/fragments/:id/info', () => {
     expect(response.body.fragment.id).toBe('dev');
     expect(response.body.fragment.ownerId).toBe(hashId);
   });
-  // Authenticated use should get the fragment if the fragment with the id passed exists.
+});
+
+describe('GET /v1/fragments/:id.ext', () => {
+  test("Authenticated user gets the existing fragment's data with the expected content-type", async () => {
+    // Get owner id
+    const ownerId = hash('user1@email.com');
+    // Create a fragment data (type = text/plain)
+    const data =
+      'Today is 11th of March 2024 and I am working in my CCP assignment 2. It is really fun learning cloud computing.';
+    // Create a fragment metadata
+    const metaData = { id: '122PM', ownerId: ownerId, type: 'text/plain' };
+    const fragment = new Fragment(metaData);
+    await fragment.setData(data);
+    // Store the fragment
+    await fragment.save();
+    // Make the get request
+    const response = await request(app).get('/v1/fragments/122PM').auth('user1@email.com', 'ps1');
+    // Make sure the exact data is received with the same content type.
+    expect(response.body.fragment).toBe(data);
+  });
+
+  test("Authenticated user gets the existing fragment's data converted to a supported content-type", async () => {
+    // Get owner id
+    const ownerId = hash('user1@email.com');
+    // Create a fragment data (type = text/markdown)
+    const markdownData = `
+      # Sample Markdown Data
+
+      This is a sample markdown text stored in a JavaScript variable.
+
+      ## Lists
+      - Item 1
+      - Item 2
+      - Item 3
+
+      ## Code Example
+      \`\`\`javascript
+      function greet(name) {
+          console.log("Hello, " + name + "!");
+      }
+      greet("World");
+      \`\`\` `;
+    // Create a fragment metadata
+    const metaData = { id: '529PM', ownerId: ownerId, type: 'text/markdown' };
+    // Create a fragment object and pass the metadata.
+    const fragment = new Fragment(metaData);
+    // Store the data into the fragment object.
+    await fragment.setData(markdownData);
+    // Store the fragment
+    await fragment.save();
+    // Make the get request
+    const response = await request(app)
+      .get('/v1/fragments/529PM.html')
+      .auth('user1@email.com', 'ps1');
+    // Make sure the data is received of HTML type.
+    expect(response.body.fragment).toBe(md.render(markdownData));
+  });
 });
