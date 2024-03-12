@@ -14,14 +14,12 @@ on:
       - 'v**'
 
 jobs:
-
   # Assume that the CI Workflow jobs have already passed.
   # We dont tag a commit untill the build is working.
   aws:
-    name: AWS
+    name: AWS Docker Registry
     runs-on: ubuntu-latest
     steps:
-
       # Check out the code from git.
       - name: Checkout code
         uses: actions/checkout@v4
@@ -60,5 +58,3 @@ jobs:
           push: true
           tags: ${{env.ECR_REGISTRY}}/${{env.ECR_REPO}}:${{env.VERSION_TAG}},
             ${{env.ECR_REGISTRY}}/${{env.ECR_REPO}}:latest
-        
-
