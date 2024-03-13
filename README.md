@@ -6,7 +6,7 @@ This is microservice for storing fragments. It provides a list of APIs which can
 
 ## Tech Stack
 
-Node.js, Express.js, Jest, AWS Cognito, AWS EC2 Instance
+<img src="https://skillicons.dev/icons?i=nodejs,express,jest,docker,aws,githubactions" />
 
 ## List of APIs
 
