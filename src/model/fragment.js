@@ -28,7 +28,12 @@ class Fragment {
     type,
     size = 0,
   }) {
-    this.fragmentMetaData = { id, ownerId, created, updated, type, size };
+    this.fragmentId = id;
+    this.fragmentOwnerId = ownerId;
+    this.fragmentCreated = created;
+    this.fragmentUpdated = updated;
+    this.fragmentType = type;
+    this.fragmentSize = size;
   }
 
   /**
@@ -61,13 +66,24 @@ class Fragment {
     return await deleteFragment(ownerId, id);
   }
 
+  getFragmentMetaData = () => {
+    return {
+      id: this.fragmentId,
+      ownerId: this.fragmentOwnerId,
+      created: this.fragmentCreated,
+      updated: this.fragmentUpdated,
+      type: this.fragmentType,
+      size: this.fragmentSize,
+    };
+  };
+
   /**
    * Saves the current fragment to the database
    * @returns Promise<void>
    */
   async save() {
-    this.fragmentMetaData.updated = new Date();
-    await writeFragment(this.fragmentMetaData);
+    this.fragmentUpdated = new Date();
+    await writeFragment(this.fragmentOwnerId, this.fragmentId, this.getFragmentMetaData());
   }
 
   /**
@@ -75,7 +91,7 @@ class Fragment {
    * @returns Promise<Buffer>
    */
   async getData() {
-    return await readFragmentData(this.fragmentMetaData.ownerId, this.fragmentMetaData.id);
+    return await readFragmentData(this.fragmentOwnerId, this.fragmentId);
   }
 
   /**
@@ -85,11 +101,11 @@ class Fragment {
    */
   async setData(data) {
     // Updating the fragment meta data's update key with the recent date and time!
-    this.fragmentMetaData.updated = new Date();
+    this.fragmentUpdated = new Date();
     // Storing the updated fragment meta data!
-    await writeFragment(this.fragmentMetaData);
+    await writeFragment(this.fragmentOwnerId, this.fragmentId, this.getFragmentMetaData());
     // Storing the fragment data!
-    await writeFragmentData(this.fragmentMetaData.ownerId, this.fragmentMetaData.id, data);
+    await writeFragmentData(this.fragmentOwnerId, this.fragmentId, data);
   }
 
   /**
@@ -99,7 +115,7 @@ class Fragment {
    */
   get mimeType() {
     try {
-      const { type } = contentType.parse(this.fragmentMetaData.type);
+      const { type } = contentType.parse(this.fragmentType);
       return type;
     } catch (error) {
       throw new Error('Invalid content type!');
@@ -112,7 +128,7 @@ class Fragment {
    */
   get isText() {
     const typeStart = /^text\/.*/i;
-    return typeStart.test(this.fragmentMetaData.type);
+    return typeStart.test(this.fragmentType);
   }
 
   /**
