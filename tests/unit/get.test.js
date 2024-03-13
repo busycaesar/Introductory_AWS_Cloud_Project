@@ -114,7 +114,7 @@ describe('GET /v1/fragments/:id.ext', () => {
     // Create sample data.
     const data = 'Sample text/plain data';
     // Create a fragment metadata.
-    const metaData = { id: '705PM', ownerId: ownerId, type: 'text/plain' };
+    const metaData = { id: '705PM', ownerId: ownerId, type: 'text/plain', size: 10 };
     // Create a fragment object.
     const fragment = new Fragment(metaData);
     // Store data into fragment object.
