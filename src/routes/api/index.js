@@ -3,6 +3,7 @@
 // Creating a router to mount API endpoints!
 const express = require('express');
 const router = express.Router();
+require('dotenv').config();
 
 const { getFragments, getFragmentUsingId, getFragmentInfoUsingId } = require('./get');
 const { postFragment } = require('./post');

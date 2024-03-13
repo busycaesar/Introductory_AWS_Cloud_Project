@@ -3,14 +3,21 @@
 // Importing all the utility functions helpful in creating the response!
 const { createSuccessResponse, createErrorResponse } = require('../../response');
 const Fragment = require('../../model/fragment');
+const logger = require('../../logger');
 
 // This API sends all the fragments of the user in an array!
 const getFragments = async (req, res) => {
+  logger.info('Getting fragments');
   // Get the owner id from the request object.
   const ownerId = req.user;
   // If the requst has a query "expand = 1", the user is send all the fragments along with its meta data. Otherwise, just an array of fragments!
-  const userFragments = await Fragment.getAllFragments(ownerId, req.query.expand);
-  res?.status(200).json(createSuccessResponse({ fragments: userFragments }));
+  try {
+    const userFragments = await Fragment.getAllFragments(ownerId, req.query.expand);
+    logger.info(userFragments);
+    res.status(200).json(createSuccessResponse({ fragments: userFragments }));
+  } catch (error) {
+    res.status(500).json(createErrorResponse(500, 'Internal Server Error!'));
+  }
 };
 
 // This function separates the fragment id and the requested extension from the query in the url.
@@ -71,7 +78,7 @@ const getFragmentUsingId = async (req, res) => {
   // Get fragment data.
   const fragmentData = await fragment.getData();
   // Send the requested fragments.
-  res.status(200).json(createSuccessResponse({ fragment: fragmentData }));
+  res.status(200).send(createSuccessResponse({ fragment: fragmentData }));
 };
 
 // This API get the id and sends the metadata of the fragment associated with that id!

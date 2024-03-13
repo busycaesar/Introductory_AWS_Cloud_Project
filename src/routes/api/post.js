@@ -2,7 +2,6 @@
 
 const contentType = require('content-type');
 const Fragment = require('../../model/fragment');
-require('dotenv').config();
 
 // Importing all the utility functions helpful in creating the response!
 const { createSuccessResponse, createErrorResponse } = require('../../response');
@@ -23,20 +22,32 @@ const postFragment = async (req, res) => {
     return;
   }
 
-  // Creating a fragment metadata!
-  const newFragment = new Fragment({ ownerId: req.user, type: type });
-  // Saving the fragment metadata!
-  await newFragment.save();
-  // Storing the fragment data!
-  await newFragment.setData(fragmentRawData);
+  let newFragment;
+
+  try {
+    // Get the size of the file.
+    const size = req.headers['content-length'];
+    // Creating a fragment metadata!
+    newFragment = new Fragment({ ownerId: req.user, type: type, size: size });
+    // Saving the fragment metadata!
+    await newFragment.save();
+    // Storing the fragment data!
+    await newFragment.setData(fragmentRawData);
+  } catch (error) {
+    res.status(500).json(createErrorResponse(500, 'Internal Server Error!'));
+    return;
+  }
 
   // Getting the origin of the url!
-  const URLOrigin = process.env.API_URL || req.headers.host,
+  const url = process.env.API_URL || req.headers.host,
     // Getting the location of the fragment created in the form of url!
-    location = new URL(`/v1/fragments/${newFragment.fragmentMetaData.id}`, URLOrigin);
+    location = new URL(`/v1/fragments/${newFragment.fragmentId}`, url);
 
   // Making sure that the location is properly created for the newly created fragment data!
-  if (!location) res.status(500).json(createErrorResponse(500, 'Internal Server Error!'));
+  if (!location) {
+    res.status(500).json(createErrorResponse(500, 'Internal Server Error!'));
+    return;
+  }
 
   // Sending the success response along with the fragment location and meta data upon making sure that the fragment metadata was created!
   res
@@ -44,7 +55,7 @@ const postFragment = async (req, res) => {
     .location(location)
     .json(
       createSuccessResponse({
-        fragment: newFragment.fragmentMetaData,
+        fragment: newFragment.getFragmentMetaData(),
       })
     );
 };
