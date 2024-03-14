@@ -137,11 +137,11 @@ class Fragment {
    */
   get formats() {
     const validConversions = {
-      'text/plain': ['.txt'],
+      'text/plain': ['text/plain'],
       'text/markdown': [
-        '.md',
-        '.html',
-        //  '.txt'
+        'text/markdown',
+        'text/html',
+        //  'text/plain'
       ],
       // 'text/html': ['.html', '.txt'],
       // 'text/csv': ['.csv', '.txt', '.json'],
@@ -184,7 +184,7 @@ class Fragment {
     // Convert fragment data into the received type.
     // For now, we only support converting from markdown to HTML; hence, the data is by default converted into HTML.
     // Update this function in future when supporting other type conversions.
-    if (type === '.html') return md.render(fragmentData);
+    if (type === 'text/html') return md.render(fragmentData);
   }
 }
 

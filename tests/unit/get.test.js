@@ -145,7 +145,7 @@ describe('GET /v1/fragments/:id.ext', () => {
     // Make the get request
     const response = await request(app).get('/v1/fragments/122PM').auth('user1@email.com', 'ps1');
     // Make sure the exact data is received with the same content type.
-    expect(response.body.fragment).toBe(data);
+    expect(response.text).toBe(data);
   });
 
   test("Authenticated user gets the existing fragment's data converted to a supported content-type", async () => {
@@ -182,6 +182,6 @@ describe('GET /v1/fragments/:id.ext', () => {
       .get('/v1/fragments/529PM.html')
       .auth('user1@email.com', 'ps1');
     // Make sure the data is received of HTML type.
-    expect(response.body.fragment).toBe(md.render(markdownData));
+    expect(response.text).toBe(md.render(markdownData));
   });
 });
