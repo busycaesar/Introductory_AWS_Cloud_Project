@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
   res.status(200).json(
     createSuccessResponse({
       author: author,
-      githubUrl: "https://github.com/busycaesar/fragments'",
+      githubUrl: 'https://github.com/busycaesar/fragments',
       version: version,
     })
   );
