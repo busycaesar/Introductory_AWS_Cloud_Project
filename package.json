@@ -6,11 +6,11 @@
   "scripts": {
     "test:watch": "jest -c jest.config.js --runInBand --watch --",
     "test": "jest -c jest.config.js --runInBand --",
-    "test:integration":"hurl --test --glob \"tests/integration/**/*.hurl\"",
+    "test:integration": "hurl --test --glob \"tests/integration/**/*.hurl\"",
     "coverage": "jest -c jest.config.js --runInBand --coverage",
     "lint": "eslint --config .eslintrc.js \"./src/**/*.js\" \"tests/**/*.js\"",
     "start": "node src/index.js",
-    "dev": "cross-env LOG_LEVEL=debug nodemon ./src/index.js --watch src",
+    "dev": "env-cmd -f ./env.jest cross-env LOG_LEVEL=debug nodemon ./src/index.js --watch src",
     "debug": "cross-env LOG_LEVEL=debug nodemon --inspect=0.0.0.0:9229 ./src/index.js --watch src",
     "docker": "docker build -t fragments .",
     "docker-bash": "docker run --rm --init --name fragments -it fragments bash",
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@orangeopensource/hurl": "^4.2.0",
     "cross-env": "^7.0.3",
+    "env-cmd": "^10.1.0",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
     "nodemon": "^3.0.2",
