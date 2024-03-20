@@ -1,4 +1,4 @@
-# Integration Test: Health Check
+# Integration Test: POST and GET Fragment
 # test/integration/post-fragments.hurl
 
 # POST Fragment
