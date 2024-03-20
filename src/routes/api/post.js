@@ -26,7 +26,7 @@ const postFragment = async (req, res) => {
 
   try {
     // Get the size of the file.
-    const size = req.headers['content-length'];
+    const size = parseInt(req.headers['content-length']);
     // Creating a fragment metadata!
     newFragment = new Fragment({ ownerId: req.user, type: type, size: size });
     // Saving the fragment metadata!
