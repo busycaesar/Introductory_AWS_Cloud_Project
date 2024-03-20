@@ -5,7 +5,7 @@
 GET http://localhost:8080/
 
 # It response with status code 200
-HTTP/* 200
+HTTP 200
 # It has no-cache value for cache control 
 Cache-Control: no-cache
 
