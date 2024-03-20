@@ -36,6 +36,8 @@ module.exports = (strategyName) => {
       next();
     };
 
+    logger.debug({ strategyName }, 'Strategy Name');
+
     // Call the given passport strategy's authenticate() method, passing the
     // req, res, next objects.  Invoke our custom callback when done.
     passport.authenticate(strategyName, { session: false }, callback)(req, res, next);
