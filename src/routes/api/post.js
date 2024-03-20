@@ -16,6 +16,7 @@ const postFragment = async (req, res) => {
 
   // If the content type is not one of the supported once, the data in the request's body would not be a buffer!
   if (!Buffer.isBuffer(fragmentRawData)) {
+    logger.error({ type }, 'Trying to store unsupported fragment type!');
     // Responding by sending back the error response!
     res
       .status(415)
@@ -38,6 +39,7 @@ const postFragment = async (req, res) => {
     // Storing the fragment data!
     await newFragment.setData(fragmentRawData);
   } catch (error) {
+    logger.error('Internal Server Error');
     res.status(500).json(createErrorResponse(500, 'Internal Server Error!'));
     return;
   }
@@ -47,13 +49,14 @@ const postFragment = async (req, res) => {
     // Getting the location of the fragment created in the form of url!
     location = new URL(`/v1/fragments/${newFragment.fragmentId}`, url);
 
-  logger.debug({ location }, 'Fragment Location');
-
   // Making sure that the location is properly created for the newly created fragment data!
   if (!location) {
+    logger.error({ location }, 'Location not generated!');
     res.status(500).json(createErrorResponse(500, 'Internal Server Error!'));
     return;
   }
+
+  logger.debug({ location }, 'Fragment Location');
 
   // Sending the success response along with the fragment location and meta data upon making sure that the fragment metadata was created!
   res

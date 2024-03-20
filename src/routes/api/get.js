@@ -15,6 +15,7 @@ const getFragments = async (req, res) => {
     logger.info(userFragments);
     res.status(200).json(createSuccessResponse({ fragments: userFragments }));
   } catch (error) {
+    logger.error('Internal Server Error');
     res.status(500).json(createErrorResponse(500, 'Internal Server Error!'));
   }
 };
@@ -54,6 +55,7 @@ const getFragmentUsingId = async (req, res) => {
     // Create the fragment object by passing the fragment metadata.
     fragment = new Fragment(fragmentMetaData);
   } catch (error) {
+    logger.error(`No fragments found with id ${id}`);
     res
       .status(404)
       .json(
@@ -69,12 +71,14 @@ const getFragmentUsingId = async (req, res) => {
       // Call the function to get the data converted into the required format.
       const fragmentData = await fragment.getConvertedInto(requestedExtension);
       res.status(200).type(requestedExtension).send(fragmentData);
-    } else
+    } else {
+      logger.error({ requestedExtension }, 'Unsupport extension demanded!');
       res
         .status(415)
         .json(
           createErrorResponse(415, 'The fragment cannot be converted into the extension specified!')
         );
+    }
     return;
   }
 
@@ -92,6 +96,7 @@ const getFragmentInfoUsingId = async (req, res) => {
   const fragmentMetaData = await Fragment.getFragment(req.user, fragmentId);
   // Making sure the fragment meta data associated with the id received exists!
   if (!fragmentMetaData) {
+    logger.error({ fragmentId }, 'Non existing fragment id!');
     res
       .status(404)
       .json(
