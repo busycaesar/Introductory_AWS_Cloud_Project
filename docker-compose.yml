@@ -8,10 +8,37 @@ services:
     init: true
     # Build the Docker image using the Dockerfile.
     build: .
-    # Pass environment variables
+    # Pass environment variables.
     environment:
       - API_URL=http://localhost:8080
       - HTPASSWD_FILE=tests/.htpasswd
       - LOG_LEVEL=${LOG_LEVEL:-info}
-      # Ports to publish
+      # Include AWS specific environment variables.
+      - AWS_REGION=us-east-1
+        # Use localstack endpoint.
+      - AWS_S3_ENDPOINT_URL=http://localstack:4566
+        # Use dynamoDB local endpoint.
+      - AWS_DYNAMODB_ENDPOINT_URL=http://dynamodb-local:8000
+      - AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME:-fragments}
+      - AWS_DYNAMODB_TABLE_NAME=${AWS_DYNAMODB_TABLE_NAME:-fragments}
+    # Ports to publish.
+    ports:
       - '8080:8080'
+
+  # DynamoDB
+  dynamodb-local:
+    image: amazon/dynamodb-local
+    ports:
+      # Default port is 8000.
+      - '8000:8000'
+    command: ['-jar', 'DynamoDBLocal.jar', '-inMemory']
+
+  # Localhost: To mock verious AWS Service.
+  localstack:
+    image: localstack/localstack
+    ports:
+      - '4566:4566'
+    environment:
+      # List all the AWS services require.
+      - SERVICES=s3
+      - DEFAULT_REGION=us-east-1
