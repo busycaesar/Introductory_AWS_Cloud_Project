@@ -25,6 +25,7 @@ module.exports = (strategyName) => {
 
       // Not authorized, return a 401
       if (!email) {
+        logger.warn({ email }, 'Unauthorized user trying to access!');
         return res.status(401).json(createErrorResponse(401, 'Unauthorized user!!'));
       }
 

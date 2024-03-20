@@ -7,6 +7,7 @@ const logger = require('../../logger');
 
 // This API sends all the fragments of the user in an array!
 const getFragments = async (req, res) => {
+  logger.info(`Fetch fragments for user ${req.user}`);
   // Get the owner id from the request object.
   const ownerId = req.user;
   // If the requst has a query "expand = 1", the user is send all the fragments along with its meta data. Otherwise, just an array of fragments!
@@ -49,9 +50,14 @@ const getFragmentUsingId = async (req, res) => {
   const ownerId = req.user;
   let fragmentMetaData, fragment;
 
+  logger.info(`${ownerId} trying to get the fragment with id ${id}`);
+
   try {
     // Get the fragments meta data using the fragment id and owner id.
     fragmentMetaData = await Fragment.getFragment(ownerId, fragmentId);
+
+    logger.debug({ fragmentMetaData }, `Fragment metadata ${id}`);
+
     // Create the fragment object by passing the fragment metadata.
     fragment = new Fragment(fragmentMetaData);
   } catch (error) {
@@ -65,11 +71,12 @@ const getFragmentUsingId = async (req, res) => {
   }
 
   if (requestedExtension) {
+    logger.info(`${ownerId} requested fragment in ${requestedExtension}`);
     // Make sure that the request extension is convertable from the current extension.
     if (fragment.formats.includes(requestedExtension)) {
-      logger.debug({ requestedExtension }, 'Requested Extension');
       // Call the function to get the data converted into the required format.
       const fragmentData = await fragment.getConvertedInto(requestedExtension);
+      logger.debug({ fragmentData }, `Fragment data converted into ${requestedExtension}`);
       res.status(200).type(requestedExtension).send(fragmentData);
     } else {
       logger.error({ requestedExtension }, 'Unsupport extension demanded!');
@@ -84,6 +91,9 @@ const getFragmentUsingId = async (req, res) => {
 
   // Get fragment data.
   const fragmentData = await fragment.getData();
+
+  logger.info({ fragmentData }, 'Send the fragment data!');
+
   // Send the requested fragments.
   res.status(200).type(fragment.mimeType).send(fragmentData);
 };
