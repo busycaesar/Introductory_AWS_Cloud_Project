@@ -1,12 +1,9 @@
 // src/routes/index.js
 
 const express = require('express');
-
-// Information about version and author from package.json!
 const { version, author } = require('../../package.json');
-
-// Authentication middleware!
 const { authenticate } = require('../auth');
+const { hostname } = require('os');
 
 // Creating a router to mount APIs!
 const router = express.Router();
@@ -27,6 +24,7 @@ router.get('/', (req, res) => {
       author: author,
       githubUrl: 'https://github.com/busycaesar/fragments',
       version: version,
+      hostname: hostname(),
     })
   );
 });
