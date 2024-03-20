@@ -7,7 +7,6 @@ const logger = require('../../logger');
 
 // This API sends all the fragments of the user in an array!
 const getFragments = async (req, res) => {
-  logger.info('Getting fragments');
   // Get the owner id from the request object.
   const ownerId = req.user;
   // If the requst has a query "expand = 1", the user is send all the fragments along with its meta data. Otherwise, just an array of fragments!
@@ -66,6 +65,7 @@ const getFragmentUsingId = async (req, res) => {
   if (requestedExtension) {
     // Make sure that the request extension is convertable from the current extension.
     if (fragment.formats.includes(requestedExtension)) {
+      logger.debug({ requestedExtension }, 'Requested Extension');
       // Call the function to get the data converted into the required format.
       const fragmentData = await fragment.getConvertedInto(requestedExtension);
       res.status(200).type(requestedExtension).send(fragmentData);
@@ -103,6 +103,7 @@ const getFragmentInfoUsingId = async (req, res) => {
     return;
   }
 
+  logger.debug({ fragmentMetaData }, 'Fragment Metadata');
   // Responding to the request with the meta data of the fragment!
   res.status(201).json(createSuccessResponse({ fragment: fragmentMetaData }));
 };

@@ -5,6 +5,7 @@ const Fragment = require('../../model/fragment');
 
 // Importing all the utility functions helpful in creating the response!
 const { createSuccessResponse, createErrorResponse } = require('../../response');
+const logger = require('../../logger');
 
 // This API created a new fragments of the received fragment type!
 const postFragment = async (req, res) => {
@@ -28,6 +29,9 @@ const postFragment = async (req, res) => {
     // Get the size of the file.
     const size = parseInt(req.headers['content-length']);
     // Creating a fragment metadata!
+
+    logger.debug({ type }, 'Fragment Type');
+
     newFragment = new Fragment({ ownerId: req.user, type: type, size: size });
     // Saving the fragment metadata!
     await newFragment.save();
@@ -42,6 +46,8 @@ const postFragment = async (req, res) => {
   const url = process.env.API_URL || req.headers.host,
     // Getting the location of the fragment created in the form of url!
     location = new URL(`/v1/fragments/${newFragment.fragmentId}`, url);
+
+  logger.debug({ location }, 'Fragment Location');
 
   // Making sure that the location is properly created for the newly created fragment data!
   if (!location) {
