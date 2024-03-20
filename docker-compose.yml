@@ -1,0 +1,17 @@
+# docker-compose.yml
+
+# The docker-compose file starts with the services keyword.
+# All the required services are listed here.
+services:
+  # Fragments microservice
+  fragments:
+    init: true
+    # Build the Docker image using the Dockerfile.
+    build: .
+    # Pass environment variables
+    environment:
+      - API_URL=http://localhost:8080
+      - HTPASSWD_FILE=tests/.htpasswd
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      # Ports to publish
+      - '8080:8080'
