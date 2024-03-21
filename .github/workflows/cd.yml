@@ -51,7 +51,7 @@ jobs:
           # Repositroy name
           ECR_REPO: fragments
           # This image will have two tags. One is latest and the other is the version of the project.
-          # Get the tag used in the commit. This git tag will be the version of the project.
+          # Get the tag used in the commit. This git tag is be the version of the project.
           VERSION_TAG: ${{github.ref_name}}
         uses: docker/build-push-action@v4
         with:
