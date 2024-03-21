@@ -1,7 +1,7 @@
 {
   "name": "fragments",
   "private": true,
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "Fragments back-end API",
   "scripts": {
     "test:watch": "jest -c jest.config.js --runInBand --watch --",
@@ -13,11 +13,11 @@
     "dev": "env-cmd -f ./env.jest cross-env LOG_LEVEL=debug nodemon ./src/index.js --watch src",
     "debug": "cross-env LOG_LEVEL=debug nodemon --inspect=0.0.0.0:9229 ./src/index.js --watch src",
     "docker": "docker build -t fragments .",
-    "predocker:bash":"npm run docker",
+    "predocker:bash": "npm run docker",
     "docker:bash": "docker run --rm --init --name fragments -it fragments bash",
-    "predocker:run":"npm run docker",
+    "predocker:run": "npm run docker",
     "docker:run": "docker run --rm --init --name fragments --env-file .env -p 8080:8080 fragments",
-    "aws":"bash -c './scripts/local-aws-setup.sh'"
+    "aws": "bash -c './scripts/local-aws-setup.sh'"
   },
   "repository": {
     "type": "git",
