@@ -59,6 +59,7 @@ jobs:
           tags: ${{env.ECR_REGISTRY}}/${{env.ECR_REPO}}:${{env.VERSION_TAG}},
             ${{env.ECR_REGISTRY}}/${{env.ECR_REPO}}:latest
 
+      # Fill the new image id into Amazon ECS Task definition
       - name: Fill in the new image id in Amazon ECS task definition
         id: update-task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
@@ -77,7 +78,8 @@ jobs:
             NODE_ENV=production
             AWS_COGNITO_POOL_ID=${{ secrets.AWS_COGNITO_POOL_ID }}
             AWS_COGNITO_CLIENT_ID=${{ secrets.AWS_COGNITO_CLIENT_ID }}
-      
+
+      # Deploy task definition to Amazon ECS and wait for the service to get stable
       - name: Deploy to Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
