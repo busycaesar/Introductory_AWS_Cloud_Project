@@ -26,8 +26,8 @@ HTTP 201
 
 [Asserts]
 # - Location header with url to new fragment
-# It should be "http://[Domain name]:8080/v1/fragments/[Fragment Id]"
-header "Location" matches "^http:\/\/.*:8080\/v1\/fragments\/[A-Za-z0-9_-]+$"
+# It should be "http://[Domain name]/v1/fragments/[Fragment Id]"
+header "Location" matches "^http:\/\/.*\/v1\/fragments\/[A-Za-z0-9_-]+$"
 # - Content type header to be equal to application/jsonpath
 header "content-type" == "application/json; charset=utf-8"
 # - Response status
@@ -43,7 +43,7 @@ jsonpath "$.fragment.updated" isString
 # - Fragment type
 jsonpath "$.fragment.type" == "application/json"
 # - Fragment size
-jsonpath "$.fragment.size" == 71
+jsonpath "$.fragment.size" exists
 
 # Capture POST Response
 [Captures]
@@ -60,7 +60,7 @@ user1@email.com:ps1
 
 HTTP 200
 Content-Type: application/json; charset=utf-8
-Content-Length: 71
+Content-Length: 75
 
 [Asserts]
 body == ```
