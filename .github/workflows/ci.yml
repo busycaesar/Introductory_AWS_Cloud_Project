@@ -111,11 +111,14 @@ jobs:
           node-version: '18'
           cache: 'npm'
 
-      - name: Install node dependencies and run tests
+      - name: Install node dependencies and start the server
         run: |
 
           npm ci
-          npm run test:integration
+          npm run dev
+
+      - name: Run integration tests
+        run: npm run test:integration
 
   # Build the docker container and push the container to dockerhub.
   docker-hub:
