@@ -122,7 +122,7 @@ jobs:
         run: npm run test:integration
 
       - name: Stop the server
-        run: kill ${{steps.server.outputs.id}}
+        run: kill -SIGINT ${{steps.server.outputs.id}}
 
   # Build the docker container and push the container to dockerhub.
   docker-hub:
