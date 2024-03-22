@@ -118,6 +118,7 @@ jobs:
         run: |
           npm run dev &
           export SERVER_PID=$!
+          echo "${SERVER_PID}"
 
       - name: Wait for the server to start
         run: sleep 5
