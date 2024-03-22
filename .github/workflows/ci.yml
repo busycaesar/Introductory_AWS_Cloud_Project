@@ -111,18 +111,22 @@ jobs:
           node-version: '18'
           cache: 'npm'
 
-      - name: Install node dependencies and start the server
-        run: |
+      - name: Install node dependencies
+        run: npm ci
 
-          npm ci
+      - name: Start the server
+        run: |
           npm run dev &
-        id: server
+          export SERVER_PID=$!
+
+      - name: Wait for the server to start
+        run: sleep 5
 
       - name: Run integration tests
         run: npm run test:integration
 
       - name: Stop the server
-        run: kill -SIGINT ${{steps.server.outputs.id}}
+        run: kill -SIGINT $SERVER_PID
 
   # Build the docker container and push the container to dockerhub.
   docker-hub:
