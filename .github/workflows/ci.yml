@@ -96,6 +96,27 @@ jobs:
           npm ci
           npm test
 
+  # Run tests and make sure all tests are passed.
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install node dependencies and run tests
+        run: |
+
+          npm ci
+          npm test:integration
+
   # Build the docker container and push the container to dockerhub.
   docker-hub:
     name: Build, push to DockerHub
