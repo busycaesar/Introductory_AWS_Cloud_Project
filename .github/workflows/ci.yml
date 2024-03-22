@@ -115,13 +115,13 @@ jobs:
         run: |
 
           npm ci
-          npm test:integration
+          npm run test:integration
 
   # Build the docker container and push the container to dockerhub.
   docker-hub:
     name: Build, push to DockerHub
 
-    needs: [lint, dockerfile-lint, unit-tests]
+    needs: [lint, dockerfile-lint, unit-tests, integration-tests]
     runs-on: ubuntu-latest
 
     steps:
