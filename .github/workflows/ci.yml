@@ -132,7 +132,7 @@ jobs:
   docker-hub:
     name: Build, push to DockerHub
 
-    needs: [lint, dockerfile-lint, unit-tests, integration-tests]
+    needs: [lint, dockerfile-lint, unit-tests]
     runs-on: ubuntu-latest
 
     steps:
