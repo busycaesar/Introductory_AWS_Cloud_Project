@@ -1,8 +1,8 @@
 {
-  "taskDefinitionArn": "arn:aws:ecs:us-east-1:011213964076:task-definition/fragments-task:1",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:011213964076:task-definition/fragments-task:3",
   "containerDefinitions": [
     {
-      "name": "fragments",
+      "name": "fragments-container",
       "image": "busycaesar/fragments:latest",
       "cpu": 256,
       "memoryReservation": 512,
@@ -18,6 +18,10 @@
       "essential": true,
       "environment": [
         {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
           "name": "API_URL",
           "value": "http://fragments-lb-706576295.us-east-1.elb.amazonaws.com"
         },
@@ -30,10 +34,8 @@
           "value": "debug"
         }
       ],
-      "environmentFiles": [],
       "mountPoints": [],
       "volumesFrom": [],
-      "ulimits": [],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -51,7 +53,7 @@
   "taskRoleArn": "arn:aws:iam::011213964076:role/LabRole",
   "executionRoleArn": "arn:aws:iam::011213964076:role/LabRole",
   "networkMode": "awsvpc",
-  "revision": 1,
+  "revision": 3,
   "volumes": [],
   "status": "ACTIVE",
   "requiresAttributes": [
@@ -89,7 +91,7 @@
     "cpuArchitecture": "X86_64",
     "operatingSystemFamily": "LINUX"
   },
-  "registeredAt": "2024-03-21T13:19:15.172Z",
+  "registeredAt": "2024-03-22T14:21:51.652Z",
   "registeredBy": "arn:aws:sts::011213964076:assumed-role/voclabs/user3000110=Shah,_Dev_Jigishkumar",
   "tags": []
 }
