@@ -1,9 +1,9 @@
 {
-  "taskDefinitionArn": "arn:aws:ecs:us-east-1:011213964076:task-definition/fragments-task:3",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:011213964076:task-definition/fragments-task:4",
   "containerDefinitions": [
     {
       "name": "fragments-container",
-      "image": "busycaesar/fragments:latest",
+      "image": "011213964076.dkr.ecr.us-east-1.amazonaws.com/fragments:latest",
       "cpu": 256,
       "memoryReservation": 512,
       "portMappings": [
@@ -53,7 +53,7 @@
   "taskRoleArn": "arn:aws:iam::011213964076:role/LabRole",
   "executionRoleArn": "arn:aws:iam::011213964076:role/LabRole",
   "networkMode": "awsvpc",
-  "revision": 3,
+  "revision": 4,
   "volumes": [],
   "status": "ACTIVE",
   "requiresAttributes": [
@@ -64,6 +64,9 @@
       "name": "ecs.capability.execution-role-awslogs"
     },
     {
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
     },
     {
@@ -71,6 +74,9 @@
     },
     {
       "name": "com.amazonaws.ecs.capability.task-iam-role"
+    },
+    {
+      "name": "ecs.capability.execution-role-ecr-pull"
     },
     {
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
@@ -91,7 +97,7 @@
     "cpuArchitecture": "X86_64",
     "operatingSystemFamily": "LINUX"
   },
-  "registeredAt": "2024-03-22T14:21:51.652Z",
+  "registeredAt": "2024-03-22T15:08:35.947Z",
   "registeredBy": "arn:aws:sts::011213964076:assumed-role/voclabs/user3000110=Shah,_Dev_Jigishkumar",
   "tags": []
 }

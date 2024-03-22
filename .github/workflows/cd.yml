@@ -41,7 +41,7 @@ jobs:
       # Log into the Amazon ECR.
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v2
 
       # Build and push image to Amazon ECR.
       - name: Build, push to Amazon ECR
@@ -69,7 +69,7 @@ jobs:
           VERSION_TAG: ${{ github.ref_name }}
         with:
           task-definition: fragments-definition.json
-          container-name: busycaesar/fragments
+          container-name: fragments
           # Use the image we just built and pushed to ECR for this tag
           image: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPO }}:${{ env.VERSION_TAG }}
           # Add all the necessary environment variables, using GitHub Encrypted Secrets for any values that should not be checked into git directly. Here are a few to get you started, but you should fill in the rest yourself.
