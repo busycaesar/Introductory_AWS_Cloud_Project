@@ -118,16 +118,15 @@ jobs:
         run: |
           npm run dev &
           export SERVER_PID=$!
-          echo "${SERVER_PID}"
 
       - name: Wait for the server to start
-        run: sleep 5
+        run: sleep 3
 
       - name: Run integration tests
         run: npm run test:integration
 
       - name: Stop the server
-        run: kill -SIGINT $SERVER_PID
+        run: kill -SIGINT "${SERVER_PID}"
 
   # Build the docker container and push the container to dockerhub.
   docker-hub:
