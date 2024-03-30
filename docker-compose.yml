@@ -5,6 +5,7 @@
 services:
   # Fragments microservice
   fragments:
+    container_name: fragments
     init: true
     # Build the Docker image using the Dockerfile.
     build: .
