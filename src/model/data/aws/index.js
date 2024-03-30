@@ -23,6 +23,8 @@ const writeFragmentData = async (ownerId, id, buffer) => {
     Body: buffer,
   };
 
+  logger.info({ params }, 'Stroing data into S3');
+
   // Create a command with the PutObjectCommand instance by passing the params object.
   const command = new PutObjectCommand(params);
 
@@ -50,9 +52,9 @@ const readFragmentData = async (ownerId, id) => {
 
   try {
     // Get the fragment data by passing the instance of GetObjectCommand.
-    const data = await s3Client.send(command);
+    const streamData = await s3Client.send(command);
     // Convert the stream of the data to buffer.
-    return streamToBuffer(data.Body);
+    return await streamToBuffer(streamData.Body);
   } catch (err) {
     const { Bucket, Key } = params;
     logger.error({ err, Bucket, Key }, 'Error streaming fragment data from s3.');
@@ -84,6 +86,8 @@ const deleteFragment = async (ownerId, id) => {
 
   try {
     await s3Client.send(command);
+    await metadata.del(ownerId, id);
+    logger.debug('Fragment deleted.');
   } catch (err) {
     const { Bucket, Key } = params;
     logger.error({ err, Bucket, Key }, 'Error deleting fragment data from s3.');
@@ -94,7 +98,7 @@ const deleteFragment = async (ownerId, id) => {
 // Utility Functions.
 
 const streamToBuffer = (stream) => {
-  new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     // Collect the chunks of data as it streams in.
     const chunks = [];
 

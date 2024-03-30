@@ -7,13 +7,13 @@ const logger = require('../../logger');
 
 // This API sends all the fragments of the user in an array!
 const getFragments = async (req, res) => {
-  logger.info(`Fetch fragments for user ${req.user}`);
+  logger.info(`Get all the fragments of user ${req.user}`);
   // Get the owner id from the request object.
   const ownerId = req.user;
   // If the requst has a query "expand = 1", the user is send all the fragments along with its meta data. Otherwise, just an array of fragments!
   try {
     const userFragments = await Fragment.getAllFragments(ownerId, req.query.expand);
-    logger.info(userFragments);
+    logger.info({ userFragments }, "List of user's fragment.");
     res.status(200).json(createSuccessResponse({ fragments: userFragments }));
   } catch (error) {
     logger.error('Internal Server Error');
@@ -50,7 +50,7 @@ const getFragmentUsingId = async (req, res) => {
   const ownerId = req.user;
   let fragmentMetaData, fragment;
 
-  logger.info(`${ownerId} trying to get the fragment with id ${id}`);
+  logger.info(`Get the fragment with id ${id}`);
 
   try {
     // Get the fragments meta data using the fragment id and owner id.
@@ -71,7 +71,7 @@ const getFragmentUsingId = async (req, res) => {
   }
 
   if (requestedExtension) {
-    logger.info(`${ownerId} requested fragment in ${requestedExtension}`);
+    logger.debug(`Return the fragment in type ${requestedExtension}`);
     // Make sure that the request extension is convertable from the current extension.
     if (fragment.formats.includes(requestedExtension)) {
       // Call the function to get the data converted into the required format.
@@ -92,8 +92,6 @@ const getFragmentUsingId = async (req, res) => {
   // Get fragment data.
   const fragmentData = await fragment.getData();
 
-  logger.info({ fragmentData }, 'Send the fragment data!');
-
   // Send the requested fragments.
   res.status(200).type(fragment.mimeType).send(fragmentData);
 };
@@ -104,9 +102,12 @@ const getFragmentInfoUsingId = async (req, res) => {
   const fragmentId = req.params.id;
   // Getting the fragment metadata with the fragment and owner id!
   const fragmentMetaData = await Fragment.getFragment(req.user, fragmentId);
+
+  logger.debug(`Get fragment metadata of ${fragmentId}`);
+
   // Making sure the fragment meta data associated with the id received exists!
   if (!fragmentMetaData) {
-    logger.error({ fragmentId }, 'Non existing fragment id!');
+    logger.warn({ fragmentId }, 'Non existing fragment id!');
     res
       .status(404)
       .json(

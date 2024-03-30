@@ -14,11 +14,11 @@ const postFragment = async (req, res) => {
   // Getting the type of the data!
   const { type } = contentType.parse(req);
 
-  logger.info(`${req.user} trying to add a new fragment of type ${type}`);
+  logger.debug(`Add new fragment of type ${type}`);
 
   // If the content type is not one of the supported once, the data in the request's body would not be a buffer!
   if (!Buffer.isBuffer(fragmentRawData)) {
-    logger.error({ type }, 'Trying to store unsupported fragment type!');
+    logger.warn({ type }, 'Trying to store unsupported fragment type!');
     // Responding by sending back the error response!
     res
       .status(415)
@@ -38,6 +38,7 @@ const postFragment = async (req, res) => {
     await newFragment.save();
     // Storing the fragment data!
     await newFragment.setData(fragmentRawData);
+    logger.debug('New fragment stored');
   } catch (error) {
     logger.error(`Error while storing the fragment`);
     res.status(500).json(createErrorResponse(500, 'Internal Server Error!'));

@@ -63,6 +63,7 @@ class Fragment {
    * @returns Promise<void>
    */
   static async delete(ownerId, id) {
+    
     return await deleteFragment(ownerId, id);
   }
 

@@ -12,9 +12,12 @@ services:
     environment:
       - API_URL=http://localhost:8080
       - HTPASSWD_FILE=tests/.htpasswd
-      - LOG_LEVEL=${LOG_LEVEL:-info}
-      # Include AWS specific environment variables.
+      - LOG_LEVEL=${LOG_LEVEL:-debug}
+        # Include AWS specific environment variables.
       - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-test}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-test}
+      - AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN:-test}
         # Use localstack endpoint.
       - AWS_S3_ENDPOINT_URL=http://localstack:4566
         # Use dynamoDB local endpoint.
