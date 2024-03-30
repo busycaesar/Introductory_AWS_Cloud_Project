@@ -17,7 +17,7 @@
     "docker:bash": "docker run --rm --init --name fragments -it fragments bash",
     "predocker:run": "npm run docker",
     "docker:run": "docker run --rm --init --name fragments --env-file .env -p 8080:8080 fragments",
-    "aws": "bash -c './scripts/local-aws-setup.sh'"
+    "localStack": "bash -c './scripts/localstack-docker.sh'"
   },
   "repository": {
     "type": "git",
