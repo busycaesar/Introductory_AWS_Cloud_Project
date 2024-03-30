@@ -1,7 +1,10 @@
-const MemoryDB = require('./memory-db');
+// src/model/data/aws/index.js
 
-// Create two in-memory databases: one for fragment metadata and the other for raw data
-const data = new MemoryDB();
+const MemoryDB = require('../memory/memory-db');
+const s3Client = require('@aws-sdk/client-s3');
+const logger = require('../../../logger');
+
+// Create in-memory database to store fragments metadata.
 const metadata = new MemoryDB();
 
 // Write a fragment's metadata to memory db. Returns a Promise
@@ -10,8 +13,28 @@ const writeFragment = async (ownerId, id, fragment) => await metadata.put(ownerI
 // Read a fragment's metadata from memory db. Returns a Promise
 const readFragment = async (ownerId, id) => await metadata.get(ownerId, id);
 
-// Write a fragment's data buffer to memory db. Returns a Promise
-const writeFragmentData = async (ownerId, id, buffer) => await data.put(ownerId, id, buffer);
+// Write a fragment's data buffer to memory db.
+const writeFragmentData = async (ownerId, id, buffer) => {
+  // Create params object with bucket and data information.
+  const params = {
+    Bucket: process.env.AWS_S3_BUCKET_NAME,
+    Key: `${ownerId}/${id}`,
+    Body: buffer,
+  };
+
+  // Create a command with the PutObjectCommand instance by passing the params object.
+  const command = new PutObjectCommand(params);
+
+  try {
+    // Pass the command using s3Client.
+    await s3Client.send(command);
+  } catch (err) {
+    // Get the Bucket and key information from params object to display in case of any error.
+    const { Bucket, Key } = params;
+    logger.error({ err, Bucket, Key }, 'Error uploading fragment data to S3.');
+    throw new Error('unable to upload fragment data.');
+  }
+};
 
 // Read a fragment's data from memory db. Returns a Promise
 const readFragmentData = async (ownerId, id) => await data.get(ownerId, id);
