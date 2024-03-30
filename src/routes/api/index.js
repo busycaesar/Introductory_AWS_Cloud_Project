@@ -7,6 +7,7 @@ require('dotenv').config();
 
 const { getFragments, getFragmentUsingId, getFragmentInfoUsingId } = require('./get');
 const { postFragment } = require('./post');
+const { deleteFragment } = require('./delete');
 const rawBody = require('./rawBody');
 
 // HTTP request methods for /fragments API!
@@ -23,6 +24,6 @@ router.post('/fragments', rawBody(), postFragment);
 // router.put('/fragments', require('./put'));
 
 // DELETE method
-// router.delete('/fragments', require('./delete'));
+router.delete('/fragments/:id', deleteFragment);
 
 module.exports = router;

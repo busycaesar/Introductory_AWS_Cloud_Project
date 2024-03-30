@@ -1,30 +1,30 @@
-// // src/routes/api/delete.js
+// src/routes/api/delete.js
 
-// // Importing all the utility functions helpful in creating the response!
-// const { createSuccessResponse, createErrorResponse } = require('../../response');
+// Importing all the utility functions helpful in creating the response!
+const { createSuccessResponse, createErrorResponse } = require('../../response');
+const Fragment = require('../../model/fragment');
+const logger = require('../../logger');
 
-// // This API deletes the fragments associated with the received Id!
-// router.delete('/:id', (req, res) => {
-//   // Getting the id from the parameter!
-//   const fragmentId = req.params.id;
-//   // Getting the fragment associated with the id received!
-//   const fragment = findFragmentWith(fragmentId);
+const deleteFragment = async (req, res) => {
+  // Getting the id from the parameter!
+  const fragmentId = req.params.id;
+  const ownerId = req.user;
 
-//   // Making sure that the fragment associated with the id received exists! If not responding accordingly!
-//   if (!fragment) {
-//     res
-//       .status(404)
-//       .json(
-//         createErrorResponse(
-//           404,
-//           `Check the id! There is no fragment stored with the id ${fragmentId}!`
-//         )
-//       );
-//     return;
-//   }
+  try {
+    await Fragment.delete(ownerId, fragmentId);
+    logger.debug('Delete the fragments.');
+    res.status(200).json(createSuccessResponse('Fragment delete successfully.'));
+  } catch (error) {
+    logger.error({ fragmentId }, 'No fragment found with the id.');
+    res
+      .status(404)
+      .json(
+        createErrorResponse(
+          404,
+          `Check the id! There is no fragment stored with the id ${fragmentId}!`
+        )
+      );
+  }
+};
 
-//   // Deleting the fragment and responding accordingly!
-//   if (deleteTheFragment(fragment)) res.status(200).json(createSuccessResponse());
-// });
-
-// module.exports = router;
+module.exports = { deleteFragment };
