@@ -97,36 +97,31 @@ jobs:
         run: npm test
 
   # Trying to add the integration test in the CI Workflow. It works, however, not sure how to close the server once it is started. Hence, until I figure it out, this job is commented out.
-  # integration-tests:
-  #   name: Integration Tests
-  #   runs-on: ubuntu-latest
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Check out code
-  #       uses: actions/checkout@v3
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
 
-  #     - name: Setup node
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: '18'
-  #         cache: 'npm'
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
 
-  #     - name: Install node dependencies
-  #       run: npm ci
+      - name: Install node dependencies
+        run: npm install
 
-  #     - name: Start the server
-  #       run: |
-  #         npm run dev &
-  #         export SERVER_PID=$!
+      - name: Build Containers
+        run: docker compose up -d
 
-  #     - name: Wait for the server to start
-  #       run: sleep 3
+      - name: Setup Local AWS Resources
+        run: npm run local-aws
 
-  #     - name: Run integration tests
-  #       run: npm run test:integration
-
-  #     - name: Stop the server
-  #       run: # Look for the command to stop the server!
+      - name: Run integration tests
+        run: npm run test:integration
 
   # Build the docker container and push the container to dockerhub.
   docker-hub:
