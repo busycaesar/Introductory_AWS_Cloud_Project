@@ -36,7 +36,9 @@
     "supertest": "^6.3.4"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.549.0",
     "@aws-sdk/client-s3": "^3.540.0",
+    "@aws-sdk/lib-dynamodb": "^3.549.0",
     "aws-jwt-verify": "^4.0.0",
     "compression": "^1.7.4",
     "content-type": "^1.0.5",
