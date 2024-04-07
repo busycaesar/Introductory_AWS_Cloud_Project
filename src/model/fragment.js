@@ -23,8 +23,8 @@ class Fragment {
   constructor({
     id = randomUUID(),
     ownerId,
-    created = new Date(),
-    updated = new Date(),
+    created = new Date().toString(),
+    updated = new Date().toString(),
     type,
     size = 0,
   }) {
@@ -63,7 +63,6 @@ class Fragment {
    * @returns Promise<void>
    */
   static async delete(ownerId, id) {
-    
     return await deleteFragment(ownerId, id);
   }
 
@@ -84,7 +83,7 @@ class Fragment {
    */
   async save() {
     this.fragmentUpdated = new Date();
-    await writeFragment(this.fragmentOwnerId, this.fragmentId, this.getFragmentMetaData());
+    await writeFragment(this.getFragmentMetaData());
   }
 
   /**
@@ -102,9 +101,9 @@ class Fragment {
    */
   async setData(data) {
     // Updating the fragment meta data's update key with the recent date and time!
-    this.fragmentUpdated = new Date();
+    this.fragmentUpdated = new Date().toString();
     // Storing the updated fragment meta data!
-    await writeFragment(this.fragmentOwnerId, this.fragmentId, this.getFragmentMetaData());
+    await writeFragment(this.getFragmentMetaData());
     // Storing the fragment data!
     await writeFragmentData(this.fragmentOwnerId, this.fragmentId, data);
   }
