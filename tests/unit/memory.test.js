@@ -11,7 +11,7 @@ describe('Memory functions to store fragment data and its metadata', () => {
       metaData: 'Testing writeFragment!',
     };
     // Trying the store the fragment metadata created!
-    const promiseResult = await memory.writeFragment(fragment.ownerId, fragment.id, fragment);
+    const promiseResult = await memory.writeFragment(fragment);
     // Making sure that the function resolved the promise. In other words, the function successfully stored the metadata.
     expect(promiseResult).resolves;
   });
@@ -23,7 +23,7 @@ describe('Memory functions to store fragment data and its metadata', () => {
       metaData: 'Testing readFragment!',
     };
     // Writing the metadata into the database!
-    memory.writeFragment(fragment.ownerId, fragment.id, fragment);
+    memory.writeFragment(fragment);
     // Calling the function to read the written metadata!
     const _fragment = await memory.readFragment('lmnop', 'xyz');
     // Making sure the function returned the exact metadata stored!
@@ -74,9 +74,9 @@ describe('Memory functions to store fragment data and its metadata', () => {
         ownerId: '1323',
       };
     // Store two fragment metadata!
-    memory.writeFragment(frag1.ownerId, frag1.id, frag1);
+    memory.writeFragment(frag1);
     memory.writeFragmentData('1323', '0.0', frag1);
-    memory.writeFragment(frag2.ownerId, frag2.id, frag2);
+    memory.writeFragment(frag2);
     memory.writeFragmentData('1323', '0.1', frag2);
     // Call the listfragment function!
     const fragments1 = await memory.listFragments('1323', true);
