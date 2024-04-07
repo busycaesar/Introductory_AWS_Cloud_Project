@@ -1,11 +1,11 @@
 const MemoryDB = require('./memory-db');
-
 // Create two in-memory databases: one for fragment metadata and the other for raw data
 const data = new MemoryDB();
 const metadata = new MemoryDB();
 
 // Write a fragment's metadata to memory db. Returns a Promise
-const writeFragment = async (ownerId, id, fragment) => await metadata.put(ownerId, id, fragment);
+const writeFragment = async (fragment) =>
+  await metadata.put(fragment.ownerId, fragment.id, fragment);
 
 // Read a fragment's metadata from memory db. Returns a Promise
 const readFragment = async (ownerId, id) => await metadata.get(ownerId, id);
