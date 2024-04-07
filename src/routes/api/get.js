@@ -50,8 +50,6 @@ const getFragmentUsingId = async (req, res) => {
   const ownerId = req.user;
   let fragmentMetaData, fragment;
 
-  logger.info(`Get the fragment with id ${id}`);
-
   try {
     // Get the fragments meta data using the fragment id and owner id.
     fragmentMetaData = await Fragment.getFragment(ownerId, fragmentId);
@@ -98,6 +96,7 @@ const getFragmentUsingId = async (req, res) => {
 
 // This API get the id and sends the metadata of the fragment associated with that id!
 const getFragmentInfoUsingId = async (req, res) => {
+  logger.debug('Get fragment info');
   // Getting the fragment id!
   const fragmentId = req.params.id;
   // Getting the fragment metadata with the fragment and owner id!

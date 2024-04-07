@@ -32,13 +32,11 @@ const postFragment = async (req, res) => {
     // Get the size of the file.
     const size = parseInt(req.headers['content-length']);
     // Creating a fragment metadata!
-
     newFragment = new Fragment({ ownerId: req.user, type: type, size: size });
     // Saving the fragment metadata!
     await newFragment.save();
     // Storing the fragment data!
     await newFragment.setData(fragmentRawData);
-    logger.debug('New fragment stored');
   } catch (error) {
     logger.error(`Error while storing the fragment`);
     res.status(500).json(createErrorResponse(500, 'Internal Server Error!'));
