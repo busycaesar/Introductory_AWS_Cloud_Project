@@ -169,11 +169,11 @@ class Fragment {
       'text/html',
       'text/csv',
       'application/json',
-      // 'image/png',
-      // 'image/jpeg',
-      // 'image/webp',
-      // 'image/avig',
-      // 'image/gif',
+      'image/png',
+      'image/jpeg',
+      'image/webp',
+      'image/avig',
+      'image/gif',
     ];
     // Returning the boolean if the value passed, is supported!
     return supportedType.includes(value);
