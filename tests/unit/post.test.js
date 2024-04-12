@@ -21,12 +21,12 @@ describe('POST /Fragments', () => {
 });
 
 describe('POST /Fragments in various types', () => {
-  test('authorized users are not able to store the fragments in any other type than text/* and application/json', async () => {
+  test('authorized users are not able to store the fragments in any unsupported type', async () => {
     // Trying to store unsupported type of fragment content!
     const response = await request(app)
       .post('/v1/fragments')
       .auth('user1@email.com', 'ps1')
-      .set('Content-Type', 'image/png')
+      .set('Content-Type', 'text/cpp')
       .send('This is unsupported data format!');
     // Making sure it results in an error!
     expect(response.status).toBe(415);
@@ -132,5 +132,45 @@ describe('POST /Fragments in various types', () => {
     const _storedFragmentData = (await new Fragment(fragmentMetaData).getData()).toString('utf-8');
     // Making sure that the post API actually stored the data!
     expect(_storedFragmentData).toBe(data);
+  });
+
+  test('authorized users are able to store the fragments of image/jpeg type!', async () => {
+    // Create a text/markdown type data!
+    const data = fs.readFileSync(`${absolutePath}/profile.jpeg`);
+    // Post the data along with credentials and supported data type!
+    const response = await request(app)
+        .post('/v1/fragments')
+        .auth('user1@email.com', 'ps1')
+        .set('Content-Type', 'image/jpeg')
+        .send(data),
+      // Getting the metadata from of the data posted!
+      fragmentMetaData = response.body.fragment;
+    // Making sure that the response returned a proper status code!
+    expect(response.status).toBe(201);
+    expect(response.body.status).toBe('Okay!');
+    // Fetch the data from the database using the metadata received upon making the post request!
+    const _storedFragmentData = await new Fragment(fragmentMetaData).getData();
+    // Making sure that the post API actually stored the data!
+    expect(_storedFragmentData).toEqual(Buffer.from(data));
+  });
+
+  test('authorized users are able to store the fragments of image/gif type!', async () => {
+    // Create a text/markdown type data!
+    const data = fs.readFileSync(`${absolutePath}/sponge.gif`);
+    // Post the data along with credentials and supported data type!
+    const response = await request(app)
+        .post('/v1/fragments')
+        .auth('user1@email.com', 'ps1')
+        .set('Content-Type', 'image/gif')
+        .send(data),
+      // Getting the metadata from of the data posted!
+      fragmentMetaData = response.body.fragment;
+    // Making sure that the response returned a proper status code!
+    expect(response.status).toBe(201);
+    expect(response.body.status).toBe('Okay!');
+    // Fetch the data from the database using the metadata received upon making the post request!
+    const _storedFragmentData = await new Fragment(fragmentMetaData).getData();
+    // Making sure that the post API actually stored the data!
+    expect(_storedFragmentData).toEqual(Buffer.from(data));
   });
 });
