@@ -7,6 +7,8 @@
     "test:watch": "jest -c jest.config.js --runInBand --watch --",
     "test": "jest -c jest.config.js --runInBand --",
     "test:integration": "hurl --test --glob \"tests/integration/**/*.hurl\"",
+    "pretest:integration/aws": "chmod +x ./scripts/integration-test.sh",
+    "test:integration/aws": "bash -c ./scripts/integration-test.sh",
     "coverage": "jest -c jest.config.js --runInBand --coverage",
     "lint": "eslint --config .eslintrc.js \"./src/**/*.js\" \"tests/**/*.js\"",
     "start": "node src/index.js",
