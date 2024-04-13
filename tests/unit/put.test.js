@@ -1,7 +1,6 @@
 const request = require('supertest');
 const fs = require('fs');
 const absolutePath = 'tests/unit/sampleFile';
-const hash = require('../../src/hash');
 const app = require('../../src/app');
 const Fragment = require('../../src/model/fragment');
 
