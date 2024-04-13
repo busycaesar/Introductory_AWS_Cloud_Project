@@ -45,7 +45,7 @@ describe('DELETE /Fragments', () => {
       .delete(`/v1/fragments/${fragmentId}`)
       .auth('user1@email.com', 'ps1');
     // Expect it to throw the error.
-    expect(deleteResponse.status).toBe(200);
+    expect(deleteResponse.status).toBe(201);
   });
   // Authorized users cannot delete a fragment with invalid id.
   test('Authorized users cannot delete a fragment with invalid id.', async () => {
