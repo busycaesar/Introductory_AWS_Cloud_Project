@@ -1,11 +1,7 @@
 // test/unit/post.test.js
 
 const request = require('supertest');
-const fs = require('fs');
-const absolutePath = 'tests/unit/sampleFile';
-
 const app = require('../../src/app');
-const Fragment = require('../../src/model/fragment');
 
 describe('DELETE /Fragments', () => {
   // Unauthorized users cannot delete a fragment.
