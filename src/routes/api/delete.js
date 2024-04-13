@@ -14,7 +14,7 @@ const deleteFragment = async (req, res) => {
 
   try {
     await Fragment.delete(ownerId, fragmentId);
-    res.status(200).json(createSuccessResponse('Fragment delete successfully.'));
+    res.status(201).json(createSuccessResponse('Fragment delete successfully.'));
   } catch (error) {
     logger.warn({ fragmentId }, 'No fragment found with the id.');
     res
