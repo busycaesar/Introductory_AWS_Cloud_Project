@@ -1,53 +1,29 @@
-// // src/routes/api/put.js
+// src/routes/api/put.js
 
-// // Importing all the utility functions helpful in creating the response!
-// const { createSuccessResponse, createErrorResponse } = require('../../response');
+const Fragment = require('../../model/fragment');
 
-// // This API updates the fragment associated with the passed it, with the new fragment!
-// router.put('/:id', (req, res) => {
-//   // Checking the id send by the user!
-//   const { id } = req.params.id,
-//     // Checking the type of the fragment requested!
-//     fragmentType = req.get('Content-Type'),
-//     // Getting the raw data of the new fragment!
-//     fragmentRawData = req.body;
+// Importing all the utility functions helpful in creating the response!
+const { createSuccessResponse, createErrorResponse } = require('../../response');
+const logger = require('../../logger');
 
-//   // Getting the fragment associated with the id!
-//   const fragment = findFragmentWith(id);
+// This API updates the fragment associated with the passed id, with the new fragment!
+const updateFragment = async (req, res) => {
+  // Checking the id send by the user!
+  const { id } = req.params.id,
+    // Checking the type of the fragment requested!
+    fragmentType = req.get('Content-Type'),
+    // Getting the raw data of the new fragment!
+    fragmentRawData = req.body;
 
-//   // Making sure that the frafment associated with the id exists! Otherwise responding accordingly!
-//   if (!fragment) {
-//     res
-//       .status(404)
-//       .json(
-//         createErrorResponse(404, `Check the id! There is no fragment stored with the id ${id}!`)
-//       );
-//     return;
-//   }
+  // Getting the fragment associated with the id!
 
-//   // Making sure the requested fragment type is the same as the old one. Otherwise, responding accordingly!
-//   if (!matchFragmentType(fragment, fragmentType)) {
-//     res
-//       .status(400)
-//       .json(
-//         createErrorResponse(
-//           400,
-//           'Check the fragment type requested! The fragment type cannot be chagnes once the fragment is created!'
-//         )
-//       );
-//     return;
-//   }
+  // Making sure that the fragment associated with the id exists! Otherwise responding accordingly!
 
-//   // Updating the fragment and getting the metadata for the new fragment!
-//   const updatedFragmentMetaData = updateFragment(id, fragmentRawData);
+  // Making sure the requested fragment type is the same as the old one. Otherwise, responding accordingly!
 
-//   // Responding success message once the fragment is updated!
-//   if (updatedFragmentMetaData)
-//     res.status(200).json(
-//       createSuccessResponse({
-//         fragment: updatedFragmentMetaData,
-//       })
-//     );
-// });
+  // Updating the fragment and getting the metadata for the new fragment!
 
-// module.exports = router;
+  // Responding success message once the fragment is updated!
+};
+
+module.exports = { updateFragment };

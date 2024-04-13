@@ -8,6 +8,7 @@ require('dotenv').config();
 const { getFragments, getFragmentUsingId, getFragmentInfoUsingId } = require('./get');
 const { postFragment } = require('./post');
 const { deleteFragment } = require('./delete');
+const { updateFragment } = require('./put');
 const rawBody = require('./rawBody');
 
 // HTTP request methods for /fragments API!
@@ -21,7 +22,7 @@ router.get('/fragments/:id/info', getFragmentInfoUsingId);
 router.post('/fragments', rawBody(), postFragment);
 
 // PUT method
-// router.put('/fragments', require('./put'));
+router.put('/fragments', rawBody(), updateFragment);
 
 // DELETE method
 router.delete('/fragments/:id', deleteFragment);
