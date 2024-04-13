@@ -139,7 +139,6 @@ class Fragment {
       '.webp': 'image/webp',
       '.avif': 'image/avif',
     };
-    console.log(mimeType[extension]);
     return mimeType[extension];
   }
 
