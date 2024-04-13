@@ -4,6 +4,7 @@ const { randomUUID } = require('crypto');
 // Use https://www.npmjs.com/package/content-type to create/parse Content-Type headers
 const contentType = require('content-type');
 const markdownIt = require('markdown-it');
+const sharp = require('sharp');
 const md = markdownIt();
 // Functions for working with fragment metadata/data using our DB
 const {
@@ -94,6 +95,10 @@ class Fragment {
     return await readFragmentData(this.fragmentOwnerId, this.fragmentId);
   }
 
+  setSize(size) {
+    this.fragmentSize = size;
+  }
+
   /**
    * Set's the fragment's data in the database
    * @param {Buffer} data
@@ -137,20 +142,16 @@ class Fragment {
    */
   get formats() {
     const validConversions = {
-      'text/plain': ['text/plain'],
-      'text/markdown': [
-        'text/markdown',
-        'text/html',
-        //  'text/plain'
-      ],
-      // 'text/html': ['.html', '.txt'],
-      // 'text/csv': ['.csv', '.txt', '.json'],
-      // 'application/json': ['.json', '.txt'],
-      // 'image/png': ['.png', '.jpg', '.webp', '.gif', '.avif'],
-      // 'image/jpeg': ['.png', '.jpg', '.webp', '.gif', '.avif'],
-      // 'image/webp': ['.png', '.jpg', '.webp', '.gif', '.avif'],
-      // 'image/avif': ['.png', '.jpg', '.webp', '.gif', '.avif'],
-      // 'image/gif': ['.png', '.jpg', '.webp', '.gif', '.avif'],
+      'text/plain': ['.txt'],
+      'text/markdown': ['.md', '.html', '.txt'],
+      'text/html': ['.html', '.txt'],
+      'text/csv': ['.csv', '.txt', '.json'],
+      'application/json': ['.json', '.txt'],
+      'image/png': ['.png', '.jpg', '.webp', '.gif', '.avif'],
+      'image/jpeg': ['.png', '.jpg', '.webp', '.gif', '.avif'],
+      'image/webp': ['.png', '.jpg', '.webp', '.gif', '.avif'],
+      'image/avif': ['.png', '.jpg', '.webp', '.gif', '.avif'],
+      'image/gif': ['.png', '.jpg', '.webp', '.gif', '.avif'],
     };
     // Returns the text/plain because for this assignment we are only supporting the text/plain type!
     return validConversions[this.mimeType] || false;
@@ -180,11 +181,29 @@ class Fragment {
   }
 
   async getConvertedInto(type) {
-    const fragmentData = await this.getData();
+    const fragmentData = await this.getData(),
+      fragmentType = this.getFragmentMetaData().type;
     // Convert fragment data into the received type.
-    // For now, we only support converting from markdown to HTML; hence, the data is by default converted into HTML.
-    // Update this function in future when supporting other type conversions.
-    if (type === 'text/html') return md.render(fragmentData);
+    if (fragmentType === 'text/plain' && type === '.txt') return fragmentData;
+    else if (fragmentType === 'text/markdown' && type === '.md') return fragmentData;
+    else if (fragmentType === 'text/html' && type === '.html') return fragmentData;
+    else if (fragmentType === 'text/csv' && type === '.csv') return fragmentData;
+    else if (fragmentType === 'application/json' && type === '.json') return fragmentData;
+    else if (fragmentType === 'image/png' && type === '.png') return fragmentData;
+    else if (fragmentType === 'image/jpeg' && type === '.jpeg') return fragmentData;
+    else if (fragmentType === 'image/webp' && type === '.webp') return fragmentData;
+    else if (fragmentType === 'image/avif' && type === '.avif') return fragmentData;
+    else if (fragmentType === 'image/gif' && type === '.gif') return fragmentData;
+    else if (fragmentType === 'text/markdown' && type === '.html') return md.render(fragmentData);
+    else if (fragmentType === 'text/markdown' && type === '.txt') return fragmentData;
+    else if (fragmentType === 'text/html' && type === '.txt') return fragmentData;
+    else if (fragmentType === 'text/csv' && type === '.txt') return fragmentData;
+    else if (fragmentType === 'text/csv' && type === '.json') return fragmentData;
+    else if (fragmentType === 'application/json' && type === '.txt') return fragmentData;
+    else if (fragmentType.startsWith('image/')) {
+      const format = type.slice(1);
+      return sharp(fragmentData).toFormat(format).toBuffer();
+    }
   }
 }
 
