@@ -6,6 +6,8 @@ const Fragment = require('../../src/model/fragment');
 const hash = require('../../src/hash');
 const markdownIt = require('markdown-it');
 const md = markdownIt();
+const fs = require('fs');
+const absolutePath = 'tests/unit/sampleFile';
 
 describe('GET /v1/fragments', () => {
   // Making sure for all the unauthorized requests, the status code of 401 is sent!
@@ -183,5 +185,39 @@ describe('GET /v1/fragments/:id.ext', () => {
       .auth('user1@email.com', 'ps1');
     // Make sure the data is received of HTML type.
     expect(response.text).toBe(md.render(markdownData));
+  });
+
+  test("Authenticated user gets the existing fragment's data converted to a supported content-type for image", async () => {
+    //  Post the image data.
+    const data = fs.readFileSync(`${absolutePath}/profile.jpeg`);
+    const response = await request(app)
+        .post('/v1/fragments')
+        .auth('user1@email.com', 'ps1')
+        .set('Content-Type', 'image/jpeg')
+        .send(data),
+      // Getting the metadata from of the data posted!
+      fragmentId = response.body.fragment.id;
+    // Request the image in png extension.
+    const getResponse = await request(app)
+      .get(`/v1/fragments/${fragmentId}.png`)
+      .auth('user1@email.com', 'ps1');
+    expect(getResponse.headers['content-type']).toBe('image/png');
+  });
+
+  test("Authenticated user gets the existing fragment's data converted to a supported content-type for application/json", async () => {
+    //  Post the data.
+    const data = fs.readFileSync(`${absolutePath}/sample.json`, 'utf-8');
+    const response = await request(app)
+        .post('/v1/fragments')
+        .auth('user1@email.com', 'ps1')
+        .set('Content-Type', 'application/json')
+        .send(data),
+      // Getting the metadata from of the data posted!
+      fragmentId = response.body.fragment.id;
+    // Request the image in png extension.
+    const getResponse = await request(app)
+      .get(`/v1/fragments/${fragmentId}.txt`)
+      .auth('user1@email.com', 'ps1');
+    expect(getResponse.headers['content-type']).toMatch(/^text\/plain/);
   });
 });
