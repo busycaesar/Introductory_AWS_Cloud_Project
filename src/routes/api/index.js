@@ -22,7 +22,7 @@ router.get('/fragments/:id/info', getFragmentInfoUsingId);
 router.post('/fragments', rawBody(), postFragment);
 
 // PUT method
-router.put('/fragments', rawBody(), updateFragment);
+router.put('/fragments/:id', rawBody(), updateFragment);
 
 // DELETE method
 router.delete('/fragments/:id', deleteFragment);

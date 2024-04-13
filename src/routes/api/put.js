@@ -15,6 +15,7 @@ const updateFragment = async (req, res) => {
     // Getting the raw data of the new fragment!
     fragmentRawData = req.body,
     ownerId = req.user;
+
   let fragmentMetaData, fragment;
 
   try {
@@ -36,7 +37,7 @@ const updateFragment = async (req, res) => {
   }
 
   // Making sure the requested fragment type is the same as the old one. Otherwise, responding accordingly!
-  if (fragmentType != fragmentMetaData.fragmentType) {
+  if (fragmentType != fragmentMetaData.type) {
     logger.error(`Cannot change type of the fragment.`);
     res
       .status(415)
