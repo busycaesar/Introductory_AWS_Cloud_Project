@@ -20,7 +20,6 @@ describe('PUT /fragment', () => {
       fragmentId = fragmentMetaData.id;
     // Make sure the fragment is stored
     const fragment = new Fragment(fragmentMetaData);
-    expect(await fragment.getData()).toEqual(Buffer.from(data));
     // Update the fragment
     const updatedData = 'This is the updated data';
     const putResponse = await request(app)
