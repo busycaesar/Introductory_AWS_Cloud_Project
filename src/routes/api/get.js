@@ -25,16 +25,13 @@ const getFragments = async (req, res) => {
 const extractExtensionRequested = (query) => {
   let fragmentId = query,
     requestedExtension = '';
-  const extensionToType = {
-    '.html': 'text/html',
-  };
   // Get the index of the "period".
   const extensionIndex = query.lastIndexOf('.');
   // If the period is present, update the value of fragmentId and requestedExtension.
   if (extensionIndex >= 0) {
     fragmentId = query.substring(0, extensionIndex);
-    const receivedExtension = query.substring(extensionIndex + 1);
-    if (receivedExtension) requestedExtension = extensionToType['.' + receivedExtension] || 'None';
+    const receivedExtension = query.substring(extensionIndex);
+    if (receivedExtension) requestedExtension = receivedExtension || 'None';
   }
   // Return the data.
   return { fragmentId, requestedExtension };
@@ -43,7 +40,7 @@ const extractExtensionRequested = (query) => {
 // This API get the id and sends the fragment associated with that id!
 const getFragmentUsingId = async (req, res) => {
   // Get the fragment id send by the user.
-  const id = req.params.id;
+  const { id } = req.params;
   // Get the requested extension if passed in the query.
   const { fragmentId, requestedExtension } = extractExtensionRequested(id);
   // Get the owner id from the request object.
@@ -75,7 +72,7 @@ const getFragmentUsingId = async (req, res) => {
       // Call the function to get the data converted into the required format.
       const fragmentData = await fragment.getConvertedInto(requestedExtension);
       logger.debug({ fragmentData }, `Fragment data converted into ${requestedExtension}`);
-      res.status(200).type(requestedExtension).send(fragmentData);
+      res.status(200).type(fragment.mimeTypeOf(requestedExtension)).send(fragmentData);
     } else {
       logger.error({ requestedExtension }, 'Unsupport extension demanded!');
       res

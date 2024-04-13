@@ -127,6 +127,22 @@ class Fragment {
     }
   }
 
+  mimeTypeOf(extension) {
+    const mimeType = {
+      '.txt': 'text/plain',
+      '.md': 'text/markdown',
+      '.html': 'text/html',
+      '.csv': 'text/csv',
+      '.json': 'application/json',
+      '.png': 'image/png',
+      '.jpeg': 'image/jpeg',
+      '.webp': 'image/webp',
+      '.avif': 'image/avif',
+    };
+    console.log(mimeType[extension]);
+    return mimeType[extension];
+  }
+
   /**
    * Returns true if this fragment is a text/* mime type
    * @returns {boolean} true if fragment's type is text/*
@@ -195,14 +211,19 @@ class Fragment {
     else if (fragmentType === 'image/avif' && type === '.avif') return fragmentData;
     else if (fragmentType === 'image/gif' && type === '.gif') return fragmentData;
     else if (fragmentType === 'text/markdown' && type === '.html') return md.render(fragmentData);
-    else if (fragmentType === 'text/markdown' && type === '.txt') return fragmentData;
-    else if (fragmentType === 'text/html' && type === '.txt') return fragmentData;
-    else if (fragmentType === 'text/csv' && type === '.txt') return fragmentData;
+    else if (fragmentType === 'text/markdown' && type === '.txt')
+      return fragmentData.toString('utf8');
+    else if (fragmentType === 'text/html' && type === '.txt') return fragmentData.toString('utf8');
+    else if (fragmentType === 'text/csv' && type === '.txt') return fragmentData.toString('utf8');
     else if (fragmentType === 'text/csv' && type === '.json') return fragmentData;
-    else if (fragmentType === 'application/json' && type === '.txt') return fragmentData;
+    else if (fragmentType === 'application/json' && type === '.txt')
+      return fragmentData.toString('utf8');
     else if (fragmentType.startsWith('image/')) {
-      const format = type.slice(1);
-      return sharp(fragmentData).toFormat(format).toBuffer();
+      const image = sharp(fragmentData);
+      if (type === '.png') return image.png().toBuffer();
+      else if (type === '.jpeg') return image.jpeg().toBuffer();
+      else if (type === '.webp') return image.webp().toBuffer();
+      else if (type === '.avif') return image.avif().toBuffer();
     }
   }
 }
