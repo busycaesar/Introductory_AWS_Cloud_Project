@@ -133,7 +133,7 @@ user1@email.com:ps1
 
 # Make sure it returns the expected values
 # Status code 200
-HTTP 200
+HTTP 201
 
 # GET Fragments
 
