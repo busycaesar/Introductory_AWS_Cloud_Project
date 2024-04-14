@@ -162,11 +162,11 @@ class Fragment {
       'text/html': ['.html', '.txt'],
       'text/csv': ['.csv', '.txt', '.json'],
       'application/json': ['.json', '.txt'],
-      'image/png': ['.png', '.jpg', '.webp', '.gif', '.avif'],
-      'image/jpeg': ['.png', '.jpg', '.webp', '.gif', '.avif'],
-      'image/webp': ['.png', '.jpg', '.webp', '.gif', '.avif'],
-      'image/avif': ['.png', '.jpg', '.webp', '.gif', '.avif'],
-      'image/gif': ['.png', '.jpg', '.webp', '.gif', '.avif'],
+      'image/png': ['.png', '.jpeg', '.webp', '.gif', '.avif'],
+      'image/jpeg': ['.png', '.jpeg', '.webp', '.gif', '.avif'],
+      'image/webp': ['.png', '.jpeg', '.webp', '.gif', '.avif'],
+      'image/avif': ['.png', '.jpeg', '.webp', '.gif', '.avif'],
+      'image/gif': ['.png', '.jpeg', '.webp', '.gif', '.avif'],
     };
     // Returns the text/plain because for this assignment we are only supporting the text/plain type!
     return validConversions[this.mimeType] || false;
