@@ -74,6 +74,7 @@ const getFragmentUsingId = async (req, res) => {
         const fragmentData = await fragment.getConvertedInto(requestedExtension);
         logger.debug({ fragmentData }, `Fragment data converted into ${requestedExtension}`);
         res.status(200).type(fragment.mimeTypeOf(requestedExtension)).send(fragmentData);
+        return;
       } catch (error) {
         res.status(500).json(createErrorResponse(500, 'Internal Server Error'));
         return;
@@ -85,6 +86,7 @@ const getFragmentUsingId = async (req, res) => {
         .json(
           createErrorResponse(415, 'The fragment cannot be converted into the extension specified!')
         );
+      return;
     }
   }
 
