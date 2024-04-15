@@ -34,7 +34,7 @@ WORKDIR /application
 # Copying the application from development stage!
 COPY --from=development /application /application
 
-CMD ["npm","start"]
+CMD ["node","src/index.js"]
 
 EXPOSE 8080
 
