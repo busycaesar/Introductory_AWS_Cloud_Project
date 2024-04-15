@@ -70,9 +70,14 @@ const getFragmentUsingId = async (req, res) => {
     // Make sure that the request extension is convertable from the current extension.
     if (fragment.formats.includes(requestedExtension)) {
       // Call the function to get the data converted into the required format.
-      const fragmentData = await fragment.getConvertedInto(requestedExtension);
-      logger.debug({ fragmentData }, `Fragment data converted into ${requestedExtension}`);
-      res.status(200).type(fragment.mimeTypeOf(requestedExtension)).send(fragmentData);
+      try {
+        const fragmentData = await fragment.getConvertedInto(requestedExtension);
+        logger.debug({ fragmentData }, `Fragment data converted into ${requestedExtension}`);
+        res.status(200).type(fragment.mimeTypeOf(requestedExtension)).send(fragmentData);
+      } catch (error) {
+        res.status(500).json(createErrorResponse(500, 'Internal Server Error'));
+        return;
+      }
     } else {
       logger.error({ requestedExtension }, 'Unsupport extension demanded!');
       res
@@ -81,7 +86,6 @@ const getFragmentUsingId = async (req, res) => {
           createErrorResponse(415, 'The fragment cannot be converted into the extension specified!')
         );
     }
-    return;
   }
 
   // Get fragment data.
