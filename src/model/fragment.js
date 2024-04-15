@@ -219,10 +219,10 @@ class Fragment {
       return fragmentData.toString('utf8');
     else if (fragmentType.startsWith('image/')) {
       const image = sharp(fragmentData);
-      if (type === '.png') return image.png().toBuffer();
-      else if (type === '.jpeg') return image.jpeg().toBuffer();
-      else if (type === '.webp') return image.webp().toBuffer();
-      else if (type === '.avif') return image.avif().toBuffer();
+      if (type === '.png') return await image.png().toBuffer();
+      else if (type === '.jpeg') return await image.jpeg().toBuffer();
+      else if (type === '.webp') return await image.webp().toBuffer();
+      else if (type === '.avif') return await image.avif().toBuffer();
     }
   }
 }
