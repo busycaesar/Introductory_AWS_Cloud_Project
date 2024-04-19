@@ -6,7 +6,7 @@ This is microservice for storing fragments. It provides a list of APIs which can
 
 ## Tech Stack
 
-<img src="https://skillicons.dev/icons?i=nodejs,express,jest,docker,aws,githubactions" />
+<img src="https://skillicons.dev/icons?i=nodejs,express,jest,docker,aws,githubactions,dynamodb" />
 
 ## List of APIs
 
