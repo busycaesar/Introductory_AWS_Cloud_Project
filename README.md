@@ -2,7 +2,7 @@
 
 ## Description
 
-This is microservice for storing fragments. It provides a list of APIs which can be used to store/retrive/manager the fragments. However, to use those APIs an authorization token will be needed to be passed in the header of the request. This authorization token will be provided by the AWS Cognito upon authenticating the user information. To register an account, setup <a href="https://github.com/busycaesar/Fragments-UI" target="_blank">`Fragments-UI`</a> which is officially the frontend for this microservice. All the instructions to setup the frontend is provided there.
+This is a microservice for storing fragments, leveraging AWS services. This service can be integrated with all the IoT devices in the industry using which the devices can store, retrieve, and/or manage a variety of fragments using the APIs. The type of fragments this microservice can store are text/plain, text/markdown, text/html, text/csv, application/json, image/png, image/jpeg, image/webp, image/avif or image/gif type. This would help various devices, store the reports in all the above forms. The authorized users would later be able to access the fragments they stored upon authenticating using valid credentials along with the functionality to be able to convert the type of those fragments into the supported type.
 
 ## Tech Stack
 
