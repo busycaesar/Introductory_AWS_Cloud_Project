@@ -14,11 +14,21 @@ This is a microservice for storing fragments, leveraging AWS services. This serv
 
 ### GET 
 1. `/v1/fragments`: Get an array of fragments stored by the user.
+2. `/v1/fragments/:id`: Get the fragment stored using its id.
+3. `/v1/fragments/:id.ext`: Get the fragment stored using its id converted in the required and supported type.
+4. `/v1/fragments/:id/info`: Get the metadata of the fragmented using its id.
 
 ### POST
 1. `/v1/fragments`: Store a new fragment.
 Requirements: The header should have a Content Type property, the value of which would be the type of the fragment the user intends to store.
-Promise: Once the fragment is stored successfully, this request returns a location property in the response. This property includes a URL which can be used to access the stored fragment.
+Returns: Once the fragment is stored successfully, this request returns a location property in the response. This property includes a URL which can be used to access the stored fragment.
+
+### PUT
+1. `/v1/fragments/:id`: Update an existing fragment.
+Note: Type of the fragment cannot be updated once its created.
+
+### DELETE
+1. `/v1/fragments/:id`: Update an existing fragment.
 
 ## How to run the project
 
