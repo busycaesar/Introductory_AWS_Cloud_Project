@@ -20,8 +20,8 @@ This is a microservice for storing fragments, leveraging AWS services. This serv
 
 ### POST
 1. `/v1/fragments`: Store a new fragment.
-Requirements: The header should have a Content Type property, the value of which would be the type of the fragment the user intends to store.
-Returns: Once the fragment is stored successfully, this request returns a location property in the response. This property includes a URL which can be used to access the stored fragment.
+- **Requirements**: The header should have a Content Type property, the value of which would be the type of the fragment the user intends to store.
+- **Returns**: Once the fragment is stored successfully, this request returns a location property in the response. This property includes a URL which can be used to access the stored fragment.
 
 ### PUT
 1. `/v1/fragments/:id`: Update an existing fragment.
