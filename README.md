@@ -35,48 +35,14 @@ This is a microservice for storing fragments, leveraging AWS services. This serv
 
 Clone this repository and install all the dependencies using `npm install`.
 
-Start the server in development mode (Server restarts automatically whenever any file in the server is modified and saved)
+### Start the server in `dev` mode
 
 ```bash
 npm run dev
 ```
 
-Start the server in production mode
+### Start the server in `prod` mode
 
 ```bash
 npm start
-```
-
-Start the server in production mode and print the debug logs. 
-
-```bash
-npm run debug
-```
-
-## Test Scripts
-
-Following are the scripts for testing the project:
-
-Run lint tests
-
-```bash
-npm run lint
-```
-
-Run tests. By default it runs all the tests mentioned in the test/ directory. To run the tests of a specific file, the name of the file can be passed as an argument with the command.
-
-```bash
-npm test
-```
-
-Run tests in development mode (The command is reexecuted whenever any test case is modified and saved). By default it runs all the tests mentioned in the test/ directory. To run the tests of a specific file, the name of the file can be passed as an argument with the command.
-
-```bash
-npm test:watch
-```
-
-Check the coverage of tests
-
-```bash
-npm coverage
 ```
