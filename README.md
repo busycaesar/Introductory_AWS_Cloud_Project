@@ -25,7 +25,8 @@ This is a microservice for storing fragments, leveraging AWS services. This serv
 
 ### PUT
 1. `/v1/fragments/:id`: Update an existing fragment.
-Note: Type of the fragment cannot be updated once its created.
+
+*Note: Type of the fragment cannot be updated once its created.*
 
 ### DELETE
 1. `/v1/fragments/:id`: Update an existing fragment.
