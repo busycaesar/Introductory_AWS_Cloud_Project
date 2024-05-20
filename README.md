@@ -1,6 +1,7 @@
 # IoT Data Management API
 
-[<img src="https://i.ytimg.com/vi/Hc79sDi3f0U/maxresdefault.jpg" width="50%">](https://www.youtube.com/watch?v=Hc79sDi3f0U "Now in Android: 55")
+[<img src="https://img.youtube.com/vi/xJ_gedeHwtw/0.jpg" width="600" height="350"
+/>](https://www.youtube.com/embed/xJ_gedeHwtw)
 
 ## Description
 
