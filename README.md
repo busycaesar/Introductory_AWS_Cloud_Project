@@ -2,7 +2,7 @@
 
 ## Video Explaination
 
-[<img src="https://img.youtube.com/vi/xJ_gedeHwtw/0.jpg" width="600" height="350"
+[<img src="https://img.youtube.com/vi/xJ_gedeHwtw/0.jpg" width="500" height="350"
 />](https://www.youtube.com/embed/xJ_gedeHwtw)
 
 ## Description
