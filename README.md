@@ -2,7 +2,11 @@
 
 ## Description
 
-This is a microservice for storing fragments, leveraging AWS services. This service can be integrated with all the IoT devices in the industry using which the devices can store, retrieve, and/or manage a variety of fragments using the APIs. The type of fragments this microservice can store are text/plain, text/markdown, text/html, text/csv, application/json, image/png, image/jpeg, image/webp, image/avif or image/gif type. This would help various devices, store the reports in all the above forms. The authorized users would later be able to access the fragments they stored upon authenticating using valid credentials along with the functionality to be able to convert the type of those fragments into the supported type.
+This microservice project is engineered to efficiently store, retrieve, and manage diverse data fragments through APIs, facilitating seamless integration with IoT devices in industrial environments. The service utilizes AWS Cognito for robust authentication, ensuring secure interactions between authorized devices and users. The CI/CD pipeline is meticulously designed to automate comprehensive testing and ensure seamless, reliable deployment.
+
+The Continuous Integration (CI) workflow is initiated upon commits being pushed to GitHub. The CI pipeline encompasses a series of rigorous jobs, including executing all unit and integration tests, and performing lint checks across the codebase to enforce stringent coding standards. Following the successful completion of these checks, the Docker container is built and subsequently pushed to DockerHub, ensuring that only validated code is deployed.
+
+The Continuous Deployment (CD) workflow is activated when a new version tag is pushed to GitHub. This workflow involves building the latest code and pushing the resulting image to Amazon ECR. Utilizing GitHub secrets, AWS credentials are securely configured to log into Amazon ECR. The workflow updates the ECS task definition with the newly built image ID, and the updated task definition is deployed to Amazon ECS. This process guarantees that the service operates with the latest version, configured with the appropriate environment variables for production deployment.
 
 ## Tech Stack
 
