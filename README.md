@@ -1,4 +1,4 @@
-# IoT Data Management API
+# Introductory AWS Cloud Project
 
 ## Video Explaination
 
