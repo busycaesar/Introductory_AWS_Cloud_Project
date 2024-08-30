@@ -1,12 +1,10 @@
 # Introductory AWS Cloud Project
 
 ## Video Explaination
-
 [<img src="https://img.youtube.com/vi/xJ_gedeHwtw/0.jpg" width="500" height="375"
 />](https://www.youtube.com/embed/xJ_gedeHwtw)
 
 ## Description
-
 This microservice project is engineered to efficiently store, retrieve, and manage diverse data fragments through APIs, facilitating seamless integration with IoT devices in industrial environments. The service utilizes **AWS Cognito** for robust authentication, ensuring secure interactions between authorized devices and users. The CI/CD pipeline is meticulously designed to automate comprehensive testing and ensure seamless, reliable deployment.
 
 The **Continuous Integration (CI)** workflow is initiated upon commits being pushed to GitHub. The CI pipeline encompasses a series of rigorous jobs, including executing all unit and integration tests, and performing lint checks across the codebase to enforce stringent coding standards. Following the successful completion of these checks, the Docker container is built and subsequently pushed to DockerHub, ensuring that only validated code is deployed.
@@ -14,11 +12,9 @@ The **Continuous Integration (CI)** workflow is initiated upon commits being pus
 The **Continuous Deployment (CD)** workflow is activated when a new version tag is pushed to GitHub. This workflow involves building the latest code and pushing the resulting image to **Amazon ECR**. Utilizing GitHub secrets, AWS credentials are securely configured to log into Amazon ECR. The workflow updates the ECS task definition with the newly built image ID, and the updated task definition is deployed to **Amazon ECS**. This process guarantees that the service operates with the latest version, configured with the appropriate environment variables for production deployment.
 
 ## Tech Stack
-
 <img src="https://skillicons.dev/icons?i=nodejs,express,jest,docker,aws,githubactions,dynamodb" />
 
 ## List of APIs
-
 **Note**: All the requests should have the authorization token in the Header. 
 
 ### GET 
